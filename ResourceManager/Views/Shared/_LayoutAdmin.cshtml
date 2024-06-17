@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ResourceManager</title>
+    @* From Template *@
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="~/Admin/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/Admin/libTemplate/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Admin/libTemplate/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Admin/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="~/Admin/css/style.css" rel="stylesheet">
+    @*
+    From original *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ResourceManager.styles.css" asp-append-version="true" />
+   
+
+</head>
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" src="~/Admin/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">Jhon Doe</h6>
+                    <span>Admin</span>
+                </div>
+            </div>
+ 
+                <div class="navbar-nav w-100"> 
+                    <li class="mb-1">
+                        <figcaption class="blockquote-footer fw-bold fs-5 mt-1 mb-1">
+                        Function <cite title="Function"></cite>
+                      </figcaption>
+                        <a asp-area="" asp-controller="Home" asp-action="Setting" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Setting" ? "active" : "")">
+                        <i class="fa fa-th me-2" id="dashboard"></i>Setting account</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Admin" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Admin" ? "active" : "")">
+                        <i class="fa fa-th me-2" id="dashboard"></i>Dashboard</a>
+                        @* <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                        <i class="fa fa-th me-2" id="dashboard"></i>Dashboard</a> *@
+                    
+
+                        <a asp-area="" asp-controller="Home" asp-action="Project" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Project" ? "active" : "")">
+                        <i class="fa fa-th me-2" id="projectMng"></i>Projects</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Employee" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Employee" ? "active" : "")">
+                        <i class="fa fa-keyboard me-2" id="EmployeeMng"></i>Employee</a>
+                      @*     <a asp-area="Admin" asp-controller="Home" asp-action="Cart" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Cart</a>
+                          <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Team</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="#" class="dropdown-item">No team at this time</a> *@
+                                
+                            </div>
+                </div> 
+                    </li>
+                     @* <li class="mb-1">
+                        <figcaption class="blockquote-footer fw-bold fs-5 mt-1 mb-1">
+                        Activities <cite title="Activities"></cite>
+                      </figcaption>
+                       <a asp-area="Admin" asp-controller="Home" asp-action="Event" class="nav-item nav-link"><i class="fa fa-table me-2" ></i>Event</a>
+                       <a asp-area="Admin" asp-controller="Home" asp-action="Meeting" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Meeting</a>
+                       
+                    </li>
+                     <li class="mb-1">
+                        <figcaption class="blockquote-footer fw-bold fs-5 mt-1 mb-1">
+                        Role <cite title="Role"></cite>
+                      </figcaption>
+                      <a  class="nav-item nav-link">
+                        <i class="fa fa-th me-2" id="projectMng"></i>Role</a>
+                      <a  class="nav-item nav-link">
+                        <i class="fa fa-th me-2" id="projectMng"></i>Permission</a>
+                        
+                       
+                    </li>
+                    
+                
+                @* asp-area="Admin" asp-controller="Home" asp-action="Project" *@              
+                
+                @* <li class="mb-1">
+                        <figcaption class="blockquote-footer fw-bold fs-5 mt-1 mb-1">
+                        Others <cite title="Source Title"></cite>
+                      </figcaption>                                                                   
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="signin.html" class="dropdown-item">Sign In</a>
+                        <a href="signup.html" class="dropdown-item">Sign Up</a>
+                        <a href="404.html" class="dropdown-item">404 Error</a>
+                        <a href="blank.html" class="dropdown-item">Blank Page</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="button.html" class="dropdown-item">Buttons</a>
+                        <a href="typography.html" class="dropdown-item">Typography</a>
+                        <a href="element.html" class="dropdown-item">Other Elements</a>
+                    </div>
+                </div>               
+                    </li> *@ 
+                
+               
+                
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+    @* NAV BAR *@
+    <div class="content">
+        <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+        <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+            <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+        </a>
+        <a href="#" class="sidebar-toggler flex-shrink-0">
+            <i class="fa fa-bars"></i>
+        </a>
+        <form class="d-none d-md-flex ms-4">
+            <input class="form-control border-0" type="search" placeholder="Search">
+        </form>
+        <div class="navbar-nav align-items-center ms-auto">
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-envelope me-lg-2"></i>
+                    <span class="d-none d-lg-inline-flex">Message</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                    <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle" src="~/Admin/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="ms-2">
+                                <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                <small>15 minutes ago</small>
+                            </div>
+                        </div>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle" src="~/Admin/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="ms-2">
+                                <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                <small>15 minutes ago</small>
+                            </div>
+                        </div>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle" src="~/Admin/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="ms-2">
+                                <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                <small>15 minutes ago</small>
+                            </div>
+                        </div>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item text-center">See all message</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-bell me-lg-2"></i>
+                    <span class="d-none d-lg-inline-flex">Notificatin</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                    <a href="#" class="dropdown-item">
+                        <h6 class="fw-normal mb-0">Profile updated</h6>
+                        <small>15 minutes ago</small>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item">
+                        <h6 class="fw-normal mb-0">New user added</h6>
+                        <small>15 minutes ago</small>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item">
+                        <h6 class="fw-normal mb-0">Password changed</h6>
+                        <small>15 minutes ago</small>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item text-center">See all notifications</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <img class="rounded-circle me-lg-2" src="~/Admin/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                    <span class="d-none d-lg-inline-flex">John Doe</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                    
+                    <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoUser">Account</a>
+                    
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="#" class="dropdown-item">Log Out</a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+<section>
+    <style>
+        /* Adjust the modal width */
+        #infoUser .modal-dialog {
+            max-width: 60%; /* Adjust this value to resize the modal */
+        }
+        /* Adjust the modal height */
+        #infoUser.modal-content {
+            height: 1rem; /* Adjust this value to resize the modal height */
+        }
+
+        .image-container {
+            position: relative;
+            width: 150px;
+            margin-top: 20px;
+        }
+
+            .image-container img {
+                width: 100%;
+                height: auto;
+                border-radius: 50%;
+            }
+
+            .image-container input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+            .image-container .btn {
+                position: absolute;
+                bottom: 3rem;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+    </style>
+    <div class="modal fade" id="infoUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content ">
+                <div class="modal-header bg-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-white">
+                    <div class="container rounded  mt-5 mb-5">
+                        <div class="row">
+                            <div class="col-md-3 border-right">
+
+
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                    <div class="image-container">
+                                        <img class="rounded-circle mt-5" id="userImage" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                                        <input type="file" id="customFile2" onchange="displaySelectedImage(event, 'userImage')" />
+                                        <label for="customFile2" class="btn">Choose file</label>
+                                    </div>
+
+                                    <span class="font-weight-bold">User Name</span>
+                                    <span class="text-black-50">user@gmail.com.my</span>
+                                </div>
+                                <script>
+                                    function displaySelectedImage(event, imgTagId) {
+                                        const file = event.target.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                                const imgTag = document.getElementById(imgTagId);
+                                                imgTag.src = e.target.result;
+                                                imgTag.style.display = 'block'; // Make sure the image is visible
+
+                                                const chooseFileLabel = event.target.nextElementSibling;
+                                                chooseFileLabel.style.display = 'none';
+                                            }
+                                            reader.readAsDataURL(file);
+
+                                        }
+                                    }
+                                </script>
+                            </div>
+                            <div class="col-md-5 border-right">
+                                <div class="p-3 py-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h4 class="text-right">Profile Detail</h4>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <label class="labels">Full Name</label>
+                                            <input type="text" class="form-control modalfullname" placeholder="Input your full name" value="" >
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12"><label class="labels">Email</label><input type="email" class="form-control modalemail" placeholder="Input your email" value="" ></div>
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Mobile Number</label><input type="tel" class="form-control modalnumber" placeholder="Input your phone number" value="" ></div>
+
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Birth Day</label><input type="date" class="form-control modalbirthday" placeholder="Your birthday" value="" ></div>
+
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Join day</label><input type="date" class="form-control modaljoinday" placeholder="Your Onboard day" value="" ></div>
+
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control modaladdress" placeholder="Your city" value="" ></div>
+
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12">
+                                            <label class="labels">Team</label>
+                                              <select class="form-control modalteam">
+                                                    <option value="" disabled selected>Select your team</option>
+                                                    <option value="1">TPHCM</option>
+                                                    <option value="2">Ha Noi</option>
+                                                    <option value="3">Da Nang</option>
+                                              </select>
+                                        </div>
+
+                                    </div>
+
+                                    
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                    <button id="saveInfo" class="btn btn-primary profile-button" type="button" >Save Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+</div>
+</section>
+    <!-- Navbar End -->
+        <!-- Navbar End -->
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div
+            <footer class="border-top footer text-muted">
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded-top p-4">
+                <div class="row">
+                    <div class="col-12 col-sm-6 text-center text-sm-start">
+                        &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                    </div>
+                    <div class="col-12 col-sm-6 text-center text-sm-end">
+                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                        </br>
+                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+
+@* 
+    Template JS *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> *@
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Admin/libTemplate/chart/chart.min.js"></script>
+    <script src="~/Admin/libTemplate/easing/easing.min.js"></script>
+    <script src="~/Admin/libTemplate/waypoints/waypoints.min.js"></script>
+    <script src="~/Admin/libTemplate/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Admin/libTemplate/tempusdominus/js/moment.min.js"></script>
+    <script src="~/Admin/libTemplate/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="~/Admin/libTemplate/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/Admin/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.css">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.js"></script>
+    @* Page JS *@
+    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

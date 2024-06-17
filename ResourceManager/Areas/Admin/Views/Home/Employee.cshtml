@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "Employee";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section>
+    <div class="d-flex justify-content-end">
+        <div class=" mb-3 p-3 mt-3">
+            <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#addUser">Add account</a>
+        </div>
+        <div class="mb-3 p-3 mt-3">
+            <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#infoUser">Detail account Form (test)</a>
+        </div>
+    </div>
+    
+    
+    <div class="d-flex justify-content-between gap-4">
+        <article class="d-grid flex-grow-1">
+            @* list item *@
+            <div id="listtask" class="bg-white px-3 py-2 shadow rounded">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>STT</th>
+                            <th>Email</th>
+                            <th>Name</th>                          
+                            <th>Active</th>                         
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listtasks">
+                        <tr>
+                            <td colspan="6" class="text-center">No data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section>
+
+    <div class="modal fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white" id="staticBackdropLabel">Add Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="idcard" value="" hidden />
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-bold">Email</label>
+                        <input type="email" class="form-control" id="userEmail" value="" placeholder="Input user email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label fw-bold">Full Name</label>
+                        <input type="text" class="form-control" id="userName" value="" placeholder="Input user full name">
+                    </div>
+                    <div class="mb-3">
+                        
+                        <label for="role" class="form-label fw-bold">Role</label>
+                        <select class="form-select" id="Role" aria-label="T">
+                            <option selected value="1">Engineer</option>
+                            <option value="2">ASE</option>
+                            <option value="3">Senior</option>
+                            <option value="4">Leader</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Active
+                        </label>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void()" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</a>
+                    <a id="addtask" class="btn btn-primary">Add user</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <style>
+        /* Adjust the modal width */
+        #infoUser .modal-dialog {
+            max-width: 60%; /* Adjust this value to resize the modal */
+        }
+        /* Adjust the modal height */
+        #infoUser.modal-content {
+            height: 1rem; /* Adjust this value to resize the modal height */
+        }
+
+        .image-container {
+            position: relative;
+            width: 150px;
+            margin-top: 20px;
+        }
+
+            .image-container img {
+                width: 100%;
+                height: auto;
+                border-radius: 50%;
+            }
+
+            .image-container input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+            .image-container .btn {
+                position: absolute;
+                bottom: 3rem;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+    </style>
+    <div class="modal fade" id="infoUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content ">
+                <div class="modal-header bg-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-white">
+                    <div class="container rounded  mt-5 mb-5">
+                        <div class="row">
+                            <div class="col-md-3 border-right">
+
+
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                    <div class="image-container">
+                                        <img class="rounded-circle mt-5" id="userImage" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                                        <input type="file" id="customFile2" onchange="displaySelectedImage(event, 'userImage')" />
+                                        <label for="customFile2" class="btn">Choose file</label>
+                                    </div>
+
+                                    <span class="font-weight-bold">Edogaru</span>
+                                    <span class="text-black-50">edogaru@mail.com.my</span>
+                                </div>
+                                <script>
+                                    function displaySelectedImage(event, imgTagId) {
+                                      const file = event.target.files[0];
+                                      if (file) {
+                                        const reader = new FileReader();
+                                        reader.onload = function(e) {
+                                          const imgTag = document.getElementById(imgTagId);
+                                          imgTag.src = e.target.result;
+                                          imgTag.style.display = 'block'; // Make sure the image is visible
+
+                                          const chooseFileLabel = event.target.nextElementSibling;
+                                            chooseFileLabel.style.display = 'none';
+                                        }
+                                        reader.readAsDataURL(file);
+
+                                      }
+                                    }
+                                </script>
+                            </div>
+                            <div class="col-md-5 border-right">
+                                <div class="p-3 py-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h4 class="text-right">Profile Detail</h4>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="Input your full name" value=""></div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12"><label class="labels">User Name</label><input type="email" class="form-control" placeholder="Input your email" value=""></div>
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Mobile Number</label><input type="number" class="form-control" placeholder="Input your phone number" value=""></div>
+
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Birth Day</label><input type="date" class="form-control" placeholder="Your birthday" value=""></div>
+
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Join day</label><input type="date" class="form-control" placeholder="Your Onboard day" value=""></div>
+
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Role</label><input type="text" class="form-control" placeholder="Your level" value=""></div>
+
+                                    </div>
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="Your city" value=""></div>
+
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
+                                        <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                    <button class="btn btn-primary profile-button" type="button">Save Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
