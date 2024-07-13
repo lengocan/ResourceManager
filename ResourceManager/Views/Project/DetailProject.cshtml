@@ -1,0 +1,335 @@
+﻿@{
+    ViewData["Title"] = "Project";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var projectId = ViewData["ProjectId"];
+}
+
+
+    <style>
+
+    
+    body {
+    margin-top: 20px;
+    background: #90d2ff;
+    }
+    .card-box {
+    padding: 20px;
+    border-radius: 3px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    }
+    .d-flex {
+    display: flex;
+    }
+    .align-items-center {
+    align-items: center;
+    }
+    .justify-content-between {
+    justify-content: space-between;
+    }
+    .badge {
+    padding: 0.5em;
+    display: inline-block;
+    text-align: center;
+    }
+    .thumb-sm {
+    height: 36px;
+    width: 36px;
+    }
+    .task-detail .assign-team a {
+    display: inline-block;
+    margin: 5px 5px 5px 0;
+    }
+    .files-list .file-box {
+    display: inline-block;
+    vertical-align: middle;
+    width: 80px;
+    padding: 2px;
+    border-radius: 3px;
+    background-clip: padding-box;
+    }
+    .files-list .file-box img {
+    line-height: 70px;
+    }
+    .files-list .file-box p {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+    .add-new-plus {
+    height: 32px;
+    text-align: center;
+    width: 32px;
+    display: block;
+    line-height: 32px;
+    color: #98a6ad;
+    font-weight: 700;
+    background-color: #e3eaef;
+    border-radius: 50%;
+    }
+    .project-box .badge {
+    position: absolute;
+    right: 20px;
+    }
+    .project-box h4 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    }
+    .project-box ul li {
+    padding-right: 30px;
+    }
+    .project-box .project-members a {
+    margin: 0 0 10px -12px;
+    display: inline-block;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 0 24px 0 rgba(0, 0, 0, .06), 0 1px 0 0 rgba(0, 0, 0, .02);
+    box-shadow: 0 0 24px 0 rgba(0, 0, 0, .06), 0 1px 0 0 rgba(0, 0, 0, .02);
+    }
+    .project-box .project-members a:first-of-type {
+    margin-left: 0;
+    }
+    .company-card .company-logo {
+    float: left;
+    height: 60px;
+    width: 60px;
+    border-radius: 3px;
+    }
+    .company-card .company-detail {
+    margin: 0 0 50px 75px;
+    }
+    .text-muted {
+    color: #98a6ad !important;
+    }
+    p {
+    line-height: 1.6;
+    font-size: 14px;
+    }
+    .bootstrap-tagsinput .label-info {
+    background-color: #02c0ce;
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 13px;
+    margin: 3px 1px;
+    border-radius: 3px;
+    }
+    .text-primary {
+        text-decoration: none;
+    }
+
+    .instruc{
+        text-decoration: none;
+        font-size:15px;
+    }
+
+    </style>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box task-detail">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="m-b-20 p-3" id="projectName">VN-XXXXX (project Name)</h4>
+                        <div class=" mb-2 p-2 mt-2">
+                            <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#ModalEditProjectPartial" onclick="">Edit Project</a>
+                        </div>
+                        </div>
+                        
+                    <div class="d-flex justify-content-between">
+
+                            <div class="col-5">
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <h6 class="">Project Number:</h6>
+                                <div class="badge badge-primary">
+                                <a class="text-primary" id="projectNumber">
+                                        No data
+                                </a>
+
+                                </div>
+                            </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <h6>Status:</h6>
+                                    <div class="badge badge-primary">
+                                    <a class="text-primary" id="status">
+                                        No data
+                                    </a>
+                                </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <h6>Branch:</h6>
+                                <div class="badge badge-primary">
+                                    <a class="text-primary" id="branch">
+                                        No data
+                                    </a>
+                                </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <h6>Budget:</h6>
+                                <div class="badge badge-danger">
+                                    <a class="text-primary" id="budget">
+                                        No data
+                                    </a>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <h6>Created day:</h6>
+                                    <div class="badge badge-primary">
+                                    <a class="text-primary" id="createdDay">
+                                        No data
+                                    </a>
+                                </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <h6>Due day:</h6>
+                                    <div class="badge badge-primary ">
+                                    <a class="text-primary" id="dueDay">
+                                        No data
+                                    </a>
+                                </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <h6>Turn Time:</h6>
+                                    <div class="badge badge-primary">
+                                        <a class="text-primary" id="turnTime">
+                                        No data
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <h6>Priority:</h6>
+                                    <div class="badge badge-primary">
+                                    <a class="text-primary" id="priority">
+                                        No data
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-3 mt-4">
+                            <h5 class="m-b-5">Instruction</h5>
+                            <a class="text-black instruc" id="instructionDisplay">No instruction</a>
+                        </div>
+                        <div class="assign-team mt-5">
+                            <h5 class="m-b-5">Assign to</h5>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                                <a>No assignee</a>
+                                <a href="#" class="btn btn-primary shadow" data-bs-toggle="modal" data-bs-target="#ModalAssignProjectPartial" onclick="">Assign Project</a>
+                            </div>
+                        </div>
+                        <div class="attached-files mt-4">
+                            <h5>Attached Files</h5>
+                            <div class="files-list">
+                                <div class="file-box">
+                                    <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-responsive img-thumbnail" alt="attached-img"></a>
+                                    <p class="font-13 mb-1 text-muted"><small>File one</small></p>
+                                </div>
+                                <div class="file-box">
+                                    <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="img-responsive img-thumbnail" alt="attached-img"></a>
+                                    <p class="font-13 mb-1 text-muted"><small>Attached-2</small></p>
+                                </div>
+                                <div class="file-box">
+                                    <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-responsive img-thumbnail" alt="attached-img"></a>
+                                    <p class="font-13 mb-1 text-muted"><small>Dribbble shot</small></p>
+                                </div>
+                                <div class="file-box">
+                                    <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar4.png" class="img-responsive img-thumbnail" alt="attached-img"></a>
+                                    <p class="font-13 mb-1 text-muted"><small>Placeholder img</small></p>
+                                </div>
+                                <div class="file-box">
+                                    <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="img-responsive img-thumbnail" alt="attached-img"></a>
+                                    <p class="font-13 mb-1 text-muted"><small>Novel.pdf</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <h4 class="header-title m-b-30">Comments (5)</h4>
+                        <div>
+                            <div class="media m-b-20">
+                                <div class="d-flex mr-3">
+                                    <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="mt-0">Maxine Kennedy</h5>
+                                    <p class="font-13 text-muted mb-0"><a href="" class="text-dark">Michael</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p>
+                                    <a href="" class="text-success font-13">Reply</a>
+                                </div>
+                            </div>
+                            <div class="media m-b-20">
+                                <div class="d-flex mr-3">
+                                    <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar2.png"></a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="mt-0">Doyle Bell</h5>
+                                    <p class="font-13 text-muted mb-0"><a href="" class="text-dark">Michael</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p>
+                                    <a href="" class="text-success font-13">Reply</a>
+                                    <div class="media m-t-20 m-b-20">
+                                        <div class="d-flex mr-3">
+                                            <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar3.png"></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="mt-0">Elena Vancamp</h5>
+                                            <p class="font-13 text-muted mb-0"><a href="" class="text-dark">Doyle</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p>
+                                            <a href="" class="text-success font-13">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media m-b-20">
+                                <div class="d-flex mr-3">
+                                    <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="mt-0">Maxine Kennedy</h5>
+                                    <p class="font-13 text-muted mb-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p>
+                                    <a href="" class="text-success font-13">Reply</a>
+                                </div>
+                            </div>
+                            <div class="media m-b-20">
+                                <div class="d-flex mr-3">
+                                    <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar5.png"></a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="mt-0">Erick Loper</h5>
+                                    <p class="font-13 text-muted mb-0"><a href="" class="text-dark">Maxine</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p>
+                                    <a href="" class="text-success font-13">Reply</a>
+                                </div>
+                            </div>
+                            <div class="media m-b-20">
+                                <div class="d-flex mr-3">
+                                    <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
+                                </div>
+                                <div class="media-body">
+                                    <input type="text" class="form-control input-sm" placeholder="Some text value...">
+                                    <div class="mt-2 text-right">
+                                        <button type="submit" class="btn btn-sm btn-custom waves-effect waves-light">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- container -->
+    </div>
+
+@Html.Partial("ModalEditProjectPartial")
+
+@Html.Partial("ModalAssignProjectPartial")
+
+
+@section Scripts {
+    <script src="~/js/detailproject.js"></script>
+}

@@ -16,20 +16,20 @@ function loadTable() {
         type: 'GET',
         success: function (data) {
             console.log(data)
-           /* data.map((item, index) => {
+            data.map((item, index) => {
                 $('#listEmployee').append(`
                 <tr>
                     <td>${index + 1}</td>
                     <td>${item.email}</td>
-                    <td >${item.FullName}</td>
-                    <td>${item.PhoneNumber}</td>
+                    <td >${item.fullName}</td>
+                    <td>${item.phoneNumber}</td>
                     <td>${item.isActive}</td>
                     <td class="text-center">
                         <button class="btn btn-primary" onclick="EditTask(${item.id})">Edit</button>
                         <button class="btn btn-danger" onclick="DeleteTask(${item.id})">Delete</button>                      
                     </td>
                     </tr>`)
-            })*/
+            })
         }
     })
 }

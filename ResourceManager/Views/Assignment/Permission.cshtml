@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Employee";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-end">
+    <div class=" mb-3 p-3 mt-3">
+        <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#modalCreateUpdatePermission">Add role</a>
+    </div>
+    <div class="mb-3 p-3 mt-3">
+        <a href="#" class="btn btn-primary shadow rounded">Delete</a>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-between gap-4">
+    <article class="d-grid flex-grow-1">
+        @* list item *@
+        <div class="bg-white px-3 py-2 shadow rounded">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th>
+                            <input type="checkbox" id="selectedAllCheckbox" />
+                        </th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Event</th>
+                    </tr>
+                </thead>
+                <tbody id="listpermission">
+                    <tr>
+                        <td colspan="5" class="text-center">No data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</div>
+@Html.Partial("ModalCreateUpdatePermissionPartial")
+
+@section Scripts {
+    <script src="~/js/permission.js"></script>
+}

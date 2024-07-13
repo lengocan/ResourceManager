@@ -1,0 +1,32 @@
+﻿﻿<!-- Modal -->
+<div class="modal fade" id="modalCreateUpdateRoles" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="modalRolesTitle">Khai báo thông tin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col">
+                        <input type="text" id="idRoles" value="" hidden />
+                        <div class="mb-3">
+                            <label for="tenquyen" class="form-label fw-bold">Role</label>
+                            <input type="text" class="form-control" id="roleName" value="" placeholder="">
+                        </div>                    
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="isactive" checked="">
+                            <label class="form-check-label" for="kichhoat">
+                                Kích hoạt
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="CreateUpdateRoles()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>

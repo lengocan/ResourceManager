@@ -14,7 +14,9 @@ x.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddDbContext<UserIdentityContext>(x =>
 x.UseSqlServer(builder.Configuration.GetConnectionString("UserContextConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserIdentityContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<UserIdentityContext>();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

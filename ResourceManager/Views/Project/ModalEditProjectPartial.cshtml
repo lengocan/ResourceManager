@@ -1,0 +1,70 @@
+﻿﻿<!-- Modal -->
+<div class="modal fade" id="ModalEditProjectPartial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="modalProjectTitle">Project Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col">
+                        <input type="text" id="idProject" value="" hidden />
+
+                        <div class="mb-3">
+                            <label for="projectName" class="form-label fw-bold">ProjectName</label>
+                            <input type="text" class="form-control" id="projectNameEdit" value="" placeholder="">
+                        </div>     
+                        <div class="mb-3">
+                            <label for="Branch" class="form-label fw-bold">Branch</label>
+                            <select class="form-control modalteam" id="branchEdit">
+                                <option value="" disabled selected>Select Branch</option>
+                                <option value="1">TPHCM</option>
+                                <option value="2">Ha Noi</option>
+                                <option value="3">Da Nang</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label fw-bold">Status</label>
+                            <select class="form-control modalteam" id="statusEdit">
+                                <option value="" disabled selected>Select Status</option>
+                                <option value="1">Queue</option>
+                                <option value="2">In Process</option>
+                                <option value="3">Complete</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="createday" class="form-label fw-bold">Create day</label>
+                            <input type="datetime-local" class="form-control" id="createDayEdit" value="" placeholder="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dueday" class="form-label fw-bold">Due day</label>
+                            <input type="datetime-local" class="form-control" id="duedayEdit" value="" placeholder="">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="priority" class="form-label fw-bold">Priority</label>
+                            <select class="form-control modalteam" id="priorityEdit">
+                                <option value="" disabled selected>Select Priority</option>
+                                <option value="1">Regular</option>
+                                <option value="2">High</option>
+                                
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="instruction" class="form-label fw-bold">Instruction</label>
+                            <textarea class="form-control" id="instructionEdit" rows="5" placeholder="Enter your instructions here"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="UpdateProjectDetail()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>

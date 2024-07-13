@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Employee";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-end">
+    <div class=" mb-3 p-3 mt-3">
+        <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#modalCreateUpdateRoles">Add role</a>
+    </div>
+    <div class="mb-3 p-3 mt-3">
+        <a href="#" class="btn btn-primary shadow rounded">Delete</a>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-between gap-4">
+    <article class="d-grid flex-grow-1">
+        @* list item *@
+        <div class="bg-white px-3 py-2 shadow rounded">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th class="w-px-50">
+                            <input type="checkbox" id="allCheckbox" class="form-check-input" />
+                        </th>
+                        <th>Role</th>
+                        <th>Description</th>
+                        <th>Budget</th>
+
+                        <th class="w-px-150">Status</th>
+                        <th class="w-px-100 align-middle">Event</th>
+                    </tr>
+                </thead>
+                <tbody id="listrole">
+                    <tr>
+                        <td colspan="6" class="text-center">No data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</div>
+
+@Html.Partial("ModalCreateUpdateRolesPartial")
+
+@section Scripts {
+    <script src="~/js/roles.js"></script>
+}

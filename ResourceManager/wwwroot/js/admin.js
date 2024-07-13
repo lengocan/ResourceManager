@@ -59,9 +59,9 @@ function fillInfo() {
             $('.modalfullname').val(data.fullName);
             $('.modalemail').val(data.email);
             $('.modalnumber').val(data.phoneNumber);
-            $('.modalbirthday').val(data.email);
-            $('.modaljoinday').val(data.email);
-            $('.modaladdress').val(data.email);
+            $('.modalbirthday').val(data.dob);
+            $('.modaljoinday').val(data.dayJoin);
+            $('.modaladdress').val(data.address);
             $('.modalemail').val(data.email);
             $('.modalteam').val(data.team);
         }

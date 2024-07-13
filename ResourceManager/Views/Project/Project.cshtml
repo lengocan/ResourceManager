@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Project";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var projectId = ViewData["ProjectId"];
+}
+
+<div class="d-flex justify-content-end">
+    <div class=" mb-3 p-3 mt-3">
+        <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#ModalAddProjectPartial">Add Project</a>
+    </div>
+    <div class="mb-3 p-3 mt-3">
+        <a href="#" class="btn btn-primary shadow rounded">Delete</a>
+    </div>
+    <div class="mb-3 p-3 mt-3">
+        <a asp-area="" asp-controller="Project" asp-action="DetailProject" class="nav-item nav-link">
+            <i class="fa fa-keyboard me-2" id="Project"></i>Project
+        </a>
+    </div>
+    
+</div>
+
+
+<div class="d-flex justify-content-between gap-4">
+    <article class="d-grid flex-grow-1">
+        @* list item *@
+        <div class="bg-white px-3 py-2 shadow rounded">
+            
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th>Project Number</th>
+                        <th>Project Name</th>
+                        <th>Branch</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Create Day</th>
+                        <th>Due Day</th>
+                        <th>Turn time</th>
+                        @* <th class="w-px-50">
+                            Discount
+                            <input type="checkbox" id="allCheckbox" class="form-check-input" />
+                        </th> *@
+                        
+                        
+                        <th class="w-px-100 align-middle">Event</th>
+                    </tr>
+                </thead>
+                <tbody id="listproject">
+                    <tr>
+                        <td colspan="9" class="text-center">No data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</div>
+@Html.Partial("ModalAddProjectPartial")
+
+@section Scripts {
+    <script src="~/js/project.js"></script>
+}

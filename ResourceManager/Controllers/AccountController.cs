@@ -51,7 +51,7 @@ namespace ResourceManager.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEmployee()
         {
-            var item = await _identityContext.Users.ToListAsync();    
+            var item = await _identityContext.Users.OfType<UserEmployee>().ToListAsync();  
             return Ok(item);
         }
 

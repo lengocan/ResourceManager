@@ -1,0 +1,41 @@
+﻿﻿<!-- Modal -->
+<div class="modal fade" id="modalCreateUpdatePermission" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="modalPermissionTitle">Khai báo thông tin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col">
+                        <input type="text" id="idPermission" value="" hidden />
+                        <div class="mb-3">
+                            <label for="selectaccount" class="form-label fw-bold">Tài khoản cần cấp quyền</label>
+                            <select class="form-select" id="selectaccount" aria-label="Chọn tài khoản cấp quyền"></select>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>
+                                                <input type="checkbox" id="selectedAllCheckbox" />
+                                            </th>
+                                            <th>Tên quyền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listassignrole"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                <button class="btn btn-primary" onclick="CreateUpdatePermission()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
