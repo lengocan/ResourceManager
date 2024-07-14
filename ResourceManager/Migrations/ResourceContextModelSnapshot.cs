@@ -73,13 +73,12 @@ namespace ResourceManager.Migrations
             modelBuilder.Entity("ResourceManager.Models.Entities.ProjectAssign", b =>
                 {
                     b.Property<Guid>("ProjectId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserEmployeeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ProjectId");
+                    b.HasKey("ProjectId", "UserEmployeeId");
 
                     b.ToTable("ProjectAssigns");
                 });

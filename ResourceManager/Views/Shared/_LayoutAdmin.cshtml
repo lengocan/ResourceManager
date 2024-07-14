@@ -69,8 +69,8 @@
                         <figcaption class="blockquote-footer fw-bold fs-5 mt-1 mb-1">
                         Function <cite title="Function"></cite>
                       </figcaption>
-                        <a asp-area="" asp-controller="Home" asp-action="Setting" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Setting" ? "active" : "")">
-                        <i class="fa fa-th me-2" id="dashboard"></i>Setting account</a>
+                        <a asp-area="" asp-controller="Home" asp-action="TodoList" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "TodoList" ? "active" : "")">
+                        <i class="fa fa-th me-2" id="dashboard"></i>To Do List</a>
                         <a asp-area="" asp-controller="Home" asp-action="Admin" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Admin" ? "active" : "")">
                         <i class="fa fa-th me-2" id="dashboard"></i>Dashboard</a>
                         
@@ -85,7 +85,8 @@
                         <i class="fa fa-keyboard me-2" id="PermissionMng"></i>Permission</a>
                         <a asp-area="" asp-controller="Project" asp-action="Project" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Project" ? "active" : "")">
                         <i class="fa fa-keyboard me-2" id="Project"></i>Project</a>
-                      
+                        <a asp-area="" asp-controller="Cart" asp-action="Cart" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Cart" ? "active" : "")">
+                        <i class="fa fa-keyboard me-2" id="Project"></i>Cart</a>
                                 
                             </div>
                 </div> 

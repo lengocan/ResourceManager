@@ -7,14 +7,10 @@ namespace ResourceManager.Models.Entities
     public class ProjectAssign
     {
         [Key]
-
-        public Guid ProjectAssginKey { get; set; }
         public Guid ProjectId { get; set; }
         
 
         public Guid UserEmployeeId { get; set; }
-        
-
 
 
     }

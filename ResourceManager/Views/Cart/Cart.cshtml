@@ -1,17 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Employee";
+    ViewData["Title"] = "Project";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section>
-    <div class="d-flex justify-content-end">
-        <div class=" mb-3 p-3 mt-3">
-            <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#addUser">Add account</a>
-        </div>
-        <div class="mb-3 p-3 mt-3">
-            <a href="#" class="btn btn-primary shadow rounded" data-bs-toggle="modal" data-bs-target="#infoUser">Detail account Form (test)</a>
-        </div>
-    </div>
+
 
 
     <div class="d-flex justify-content-between gap-4">
@@ -22,10 +15,10 @@
                     <thead>
                         <tr class="text-center">
                             <th>STT</th>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Phone number</th>
-                            <th>Active</th>
+                            <th>Project Name</th>
+                            <th>Assignee</th>
+                            <th>Send to</th>
+
                             @* <th>Role</th> *@
                             <th>Action</th>
                         </tr>
@@ -41,8 +34,6 @@
     </div>
 </section>
 
-
-
 @section Scripts {
-    <script src="~/js/employee.js"></script>
+    <script src="~/js/cart.js"></script>
 }

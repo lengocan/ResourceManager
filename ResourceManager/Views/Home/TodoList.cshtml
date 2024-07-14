@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Project";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section>
+
+
+
+    <div class="d-flex justify-content-between gap-4">
+        <article class="d-grid flex-grow-1">
+            @* list item *@
+            <div class="bg-white px-3 py-2 shadow rounded">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Project Number</th>
+                            <th>Project Name</th>
+                            <th>Branch</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Create Day</th>
+                            <th>Due Day</th>
+                            <th>Turn time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listEmployee">
+                        <tr>
+                            <td colspan="8" class="text-center">No data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/js/todolist.js"></script>
+}

@@ -9,11 +9,12 @@
 
 ////Detail project
 $(document).ready(() => {
-    console.log("hello");
+    
     var pathArray = window.location.pathname.split('/');
     var projectId = pathArray[pathArray.length - 1];
-    console.log(projectId)
+    
     renderPageProject(projectId);
+    renderAssignInfo(projectId);
     
 });
 
@@ -139,17 +140,17 @@ function addAssgin() {
     var projectId = pathArray[pathArray.length - 1];
     var userId = $('#selectaccountAssign').val();
     $.ajax({
-        url: '/Project/Assign/' + projectId + '/' + userId,
+        url: '/Project/Assign/',
         type: 'POST',
         data: {
             projectId: projectId,
             userId:userId
         },
-
         success: function (data) {
             console.log("assing",data)
             toastr.success('Complete assign');
             $('#ModalAssignProjectPartial').modal('hide')
+            renderAssignInfo(projectId)
         },
         error: function () {
             console.log("assing", data)
@@ -171,6 +172,7 @@ function renderSelectAccountAssign() {
                     $('#selectaccountAssign').append(`
                             <option value="${item.id}">${item.fullName}</option>
                         `);
+
                 });
             } else {
                 $('#selectaccountAssign').append(`
@@ -185,7 +187,47 @@ function renderSelectAccountAssign() {
 
 }
 
-function renderAssignInfo() {
+function renderAssignInfo(projectId) {
+    $('#listAssignee').empty();
+    $.ajax({
+        url: '/Project/GetAssignee/' + projectId,
+        type: 'GET',
 
+        success: function (data) {
+            console.log("Data table assignee", data)
+            if (data.length > 0) {
+                data.forEach((item, index) => {                    
+                    $('#listAssignee').append(`
+								<tr>									
+                                    <td class="align-middle text-center">${item.fullName}</td>                                       									
+									<td class="text-center">
+										<button type="button" class="btn btn-danger btn-sm" onclick="deleleAssign('${item.id}')">Delete</button>
+									</td>
+								</tr>
+							`);
+                });
+            } 
+        }
+    })
 }
 
+function deleleAssign(userId) {
+    var pathArray = window.location.pathname.split('/');
+    var projectId = pathArray[pathArray.length - 1];
+    $.ajax({
+        url: '/Project/DeleteAssign/' + projectId + "/" + userId,
+        type: 'DELETE',
+
+        success: function (data) {
+            console.log("delte data", data)
+            
+            toastr.success("Complete unassign")
+            renderAssignInfo(projectId);
+            
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}

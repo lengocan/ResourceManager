@@ -14,7 +14,7 @@ namespace ResourceManager.Areas.Identity.Data
         public string team { get; set; } = null!;
         public bool IsActive { get; set; }
 
-        public ICollection<ProjectAssign> ProjectAssignments { get; set; } = new List<ProjectAssign>();
+        
 
     }
 }

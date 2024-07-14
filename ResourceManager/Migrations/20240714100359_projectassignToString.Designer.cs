@@ -12,8 +12,8 @@ using ResourceManager.Models.Entities;
 namespace ResourceManager.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240714064354_deleteprojectassign1")]
-    partial class deleteprojectassign1
+    [Migration("20240714100359_projectassignToString")]
+    partial class projectassignToString
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,13 +76,12 @@ namespace ResourceManager.Migrations
             modelBuilder.Entity("ResourceManager.Models.Entities.ProjectAssign", b =>
                 {
                     b.Property<Guid>("ProjectId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserEmployeeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ProjectId");
+                    b.HasKey("ProjectId", "UserEmployeeId");
 
                     b.ToTable("ProjectAssigns");
                 });

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ResourceManager.Migrations
 {
     /// <inheritdoc />
-    public partial class deleteprojectassign1 : Migration
+    public partial class projectassignToString : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace ResourceManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectAssigns", x => x.ProjectId);
+                    table.PrimaryKey("PK_ProjectAssigns", x => new { x.ProjectId, x.UserEmployeeId });
                 });
 
             migrationBuilder.CreateTable(

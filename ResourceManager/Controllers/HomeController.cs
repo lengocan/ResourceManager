@@ -41,10 +41,11 @@ namespace ResourceManager.Controllers
             return View();
         }
 
-        public IActionResult Setting()
+        public IActionResult ToDoList()
         {
             return View();
         }
+        
         /*[Route("Team")]
         public IActionResult Team()
         {
@@ -64,7 +65,7 @@ namespace ResourceManager.Controllers
         public IActionResult Cart()
         {
             return View();*/
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

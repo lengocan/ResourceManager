@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ResourceManager.Areas.Identity.Data;
+using ResourceManager.Data;
 using ResourceManager.Models.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ResourceManager.Controllers
 {
@@ -9,9 +12,12 @@ namespace ResourceManager.Controllers
     public class ProjectController : Controller
     {
         private readonly ResourceContext _context;
-        public ProjectController(ResourceContext context)
+        private readonly UserIdentityContext _userManager;
+        public ProjectController(ResourceContext context, UserIdentityContext userManager)
+
         {
             _context = context;
+            _userManager = userManager;
         }
 
 
@@ -156,45 +162,103 @@ namespace ResourceManager.Controllers
 
         #region Assgin Project
 
+        [Route("/Project/Assign")]
         [HttpPost]
-        [Route("/Project/Assign/{projectId}/{userId}")]
 
-        public async Task<IActionResult> Assign( Guid projectId, Guid userId)
+        public async Task<IActionResult> Assign( string projectId, string userId)
         {
-            try
+            var user = _userManager.Users.FirstOrDefault(x=>x.Id.ToString() == userId);
+            if (user == null)
             {
-                if (ModelState.IsValid)
-                {
-
-                    var projectAssign = new ProjectAssign
-                    {
-                        ProjectId = projectId,
-                        UserEmployeeId = userId
-                    };
-                    _context.ProjectAssigns.Add(projectAssign);
-
-                    await _context.SaveChangesAsync();
-                    return Ok(projectAssign);
-                }
-                else
-                {
-                    // Log model state errors
-                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    return BadRequest(new { errors });
-                }
+                return BadRequest("User not found");
             }
-            catch (Exception e)
+
+            // Find the project by ID (assuming you have a method to do so)
+            var project = await _context.Projects.FindAsync(Guid.Parse(projectId));
+            if (project == null)
             {
-
-                return StatusCode(500, new { message = e.Message });
+                return BadRequest("Project not found");
             }
-        
-            
 
-            
+            // Create the project assignment
+            var projectAssign = new ProjectAssign
+            {
+                ProjectId = Guid.Parse(projectId),
+                UserEmployeeId = Guid.Parse(userId)
+            };
+
+            // Add the assignment to the context
+            _context.ProjectAssigns.Add(projectAssign);
+            var result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return Ok();
+            }
+
+            return StatusCode(500, "Error assigning user to project");
         }
 
         #endregion
+
+        [HttpGet]
+        [Route("/Project/GetAssignee/{projectId}")]
+        public async Task<IActionResult> GetAssignee(Guid projectId)
+        {
+            
+            var projectAssigns = await _context.ProjectAssigns
+                                    .Where(pa => pa.ProjectId == projectId)
+                                    .ToListAsync();
+
+            var assigneeIds = projectAssigns.Select(pa => pa.UserEmployeeId).ToList();
+
+            var users = new List<UserEmployee>();
+
+            foreach (var item in assigneeIds)
+            {
+                var user = await _userManager.Users.OfType<UserEmployee>().FirstOrDefaultAsync(x => x.Id ==item.ToString());
+
+                if (user != null)
+                {
+                    users.Add(user);
+                }
+
+            }        
+            return Ok(users.Select(u => new
+            {
+                u.Id,
+                u.UserName,
+                u.Email,
+                u.dob,
+                u.FullName,
+                u.address,
+                u.dayJoin,
+                u.team,
+                u.IsActive,
+            }));
+        }
+        [HttpDelete]
+        [Route("/Project/DeleteAssign/{projectId}/{userId}")]
+        public async Task<IActionResult> DeleteAssign(Guid projectId, Guid userId)
+        {
+            var projectAssign = await _context.ProjectAssigns
+            .FirstOrDefaultAsync(pa => pa.ProjectId == projectId && pa.UserEmployeeId == userId);
+
+            if (projectAssign == null)
+            {
+                return NotFound("Assignment not found");
+            }
+
+            _context.ProjectAssigns.Remove(projectAssign);
+            var result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return StatusCode(202);
+            }
+
+            return StatusCode(500, "Error removing user assignment from project");
+        }
 
     }
 }

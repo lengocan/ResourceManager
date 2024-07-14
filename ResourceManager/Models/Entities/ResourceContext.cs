@@ -16,7 +16,15 @@ namespace ResourceManager.Models.Entities
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
        => optionsBuilder.UseSqlServer("name=Default");
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        
+            modelBuilder.Entity<ProjectAssign>(entity =>
+            {
+                entity.HasKey(e => new { e.ProjectId, e.UserEmployeeId });
+            });
+        }
+
     }
 }
