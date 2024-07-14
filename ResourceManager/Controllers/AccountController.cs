@@ -77,7 +77,7 @@ namespace ResourceManager.Controllers
                 user.FullName = fullName;
                 user.PhoneNumber = phoneNumber;
                 user.dob = dob;
-                user.IsActive = isActive;
+                
                 _identityContext.Users.Update(user);
                 await _identityContext.SaveChangesAsync();
 

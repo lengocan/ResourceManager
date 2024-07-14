@@ -259,6 +259,7 @@ public class UserIdentityContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.dayJoin).HasMaxLength(50);
             entity.Property(e => e.team).HasMaxLength(50);
             entity.Property(e => e.IsActive);
+
         });
         
         // Customize the ASP.NET Identity model and override the defaults if needed.

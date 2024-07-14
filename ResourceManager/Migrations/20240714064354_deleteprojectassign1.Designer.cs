@@ -12,8 +12,8 @@ using ResourceManager.Models.Entities;
 namespace ResourceManager.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240707151818_PROJECTtypeTurntime1")]
-    partial class PROJECTtypeTurntime1
+    [Migration("20240714064354_deleteprojectassign1")]
+    partial class deleteprojectassign1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,20 @@ namespace ResourceManager.Migrations
                     b.HasKey("ProjectId");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.ProjectAssign", b =>
+                {
+                    b.Property<Guid>("ProjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProjectId");
+
+                    b.ToTable("ProjectAssigns");
                 });
 #pragma warning restore 612, 618
         }

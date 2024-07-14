@@ -7,7 +7,7 @@
 // Write your JavaScript code.
 
 
-
+////Detail project
 $(document).ready(() => {
     console.log("hello");
     var pathArray = window.location.pathname.split('/');
@@ -57,7 +57,7 @@ function UpdateProjectDetail() {
 
     }*/
 }
-
+////Detail project
 function renderPageProject(projectId) {
     $.ajax({
         url: '/Project/getProjectByID/'+ projectId,
@@ -86,7 +86,7 @@ function renderPageProject(projectId) {
         }
     });
 }
-
+////edit Detail project
 $('#ModalEditProjectPartial').on('show.bs.modal', function () {
     // Get the button that triggered the modal
     var pathArray = window.location.pathname.split('/');
@@ -95,6 +95,8 @@ $('#ModalEditProjectPartial').on('show.bs.modal', function () {
     // Call the function to load the project data
     renderEditProject(projectId)
 });
+
+////edit Detail project
 function renderEditProject(projectId) {
 
     $.ajax({
@@ -125,6 +127,65 @@ function renderEditProject(projectId) {
     }); 
 }
 
+///Assign project to user
 
+$('#ModalAssignProjectPartial').on('show.bs.modal', function () {
+    // Get the button that triggered the modal
 
+    renderSelectAccountAssign()
+});
+function addAssgin() {
+    var pathArray = window.location.pathname.split('/');
+    var projectId = pathArray[pathArray.length - 1];
+    var userId = $('#selectaccountAssign').val();
+    $.ajax({
+        url: '/Project/Assign/' + projectId + '/' + userId,
+        type: 'POST',
+        data: {
+            projectId: projectId,
+            userId:userId
+        },
+
+        success: function (data) {
+            console.log("assing",data)
+            toastr.success('Complete assign');
+            $('#ModalAssignProjectPartial').modal('hide')
+        },
+        error: function () {
+            console.log("assing", data)
+            toastr.error('Failed to assign');
+        }
+    })
+}
+function renderSelectAccountAssign() {
+    $.ajax({
+        url: '/Account/GetAllEmployee',
+        type: 'GET',
+        success: function (data) {
+            if (data.length > 0) {
+                $('#selectaccountAssign').empty();
+                $('#selectaccountAssign').append(`
+                            <option value="0">Select account</option>
+                        `);
+                data.forEach((item, index) => {
+                    $('#selectaccountAssign').append(`
+                            <option value="${item.id}">${item.fullName}</option>
+                        `);
+                });
+            } else {
+                $('#selectaccountAssign').append(`
+                            <option value="-1">Không có dữ liệu</option>
+                        `);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+}
+
+function renderAssignInfo() {
+
+}
 

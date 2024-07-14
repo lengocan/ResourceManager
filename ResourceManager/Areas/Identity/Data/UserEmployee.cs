@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ResourceManager.Models.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace ResourceManager.Areas.Identity.Data
@@ -12,7 +13,8 @@ namespace ResourceManager.Areas.Identity.Data
         public string dayJoin { get; set; } = null!;
         public string team { get; set; } = null!;
         public bool IsActive { get; set; }
-        
-        
+
+        public ICollection<ProjectAssign> ProjectAssignments { get; set; } = new List<ProjectAssign>();
+
     }
 }

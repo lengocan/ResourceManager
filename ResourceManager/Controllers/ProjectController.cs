@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ResourceManager.Areas.Identity.Data;
 using ResourceManager.Models.Entities;
 
 namespace ResourceManager.Controllers
@@ -149,6 +150,48 @@ namespace ResourceManager.Controllers
 
                 return StatusCode(500, e.Message);
             }
+        }
+
+        #endregion
+
+        #region Assgin Project
+
+        [HttpPost]
+        [Route("/Project/Assign/{projectId}/{userId}")]
+
+        public async Task<IActionResult> Assign( Guid projectId, Guid userId)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    var projectAssign = new ProjectAssign
+                    {
+                        ProjectId = projectId,
+                        UserEmployeeId = userId
+                    };
+                    _context.ProjectAssigns.Add(projectAssign);
+
+                    await _context.SaveChangesAsync();
+                    return Ok(projectAssign);
+                }
+                else
+                {
+                    // Log model state errors
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return BadRequest(new { errors });
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(500, new { message = e.Message });
+            }
+        
+            
+
+            
         }
 
         #endregion

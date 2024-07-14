@@ -69,6 +69,20 @@ namespace ResourceManager.Migrations
 
                     b.ToTable("Projects");
                 });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.ProjectAssign", b =>
+                {
+                    b.Property<Guid>("ProjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProjectId");
+
+                    b.ToTable("ProjectAssigns");
+                });
 #pragma warning restore 612, 618
         }
     }

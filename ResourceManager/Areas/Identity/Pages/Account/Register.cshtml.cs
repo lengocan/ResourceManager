@@ -126,7 +126,8 @@ namespace ResourceManager.Areas.Identity.Pages.Account
                     address = "",
                     dayJoin = "",
                     team = "",
-                    IsActive = false,
+                    IsActive = true,
+                    
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

@@ -112,7 +112,7 @@ namespace ResourceManager.Controllers
                             u.address,
                             u.dayJoin,
                             u.team,
-                            u.IsActive
+                            u.IsActive,
                             //custom
                         };
             var permissions = await query.ToListAsync();
