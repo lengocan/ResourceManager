@@ -17,14 +17,17 @@ namespace ResourceManager.Controllers
     {
         
         private readonly UserIdentityContext _identityContext;
-
+        private readonly UserManager<UserEmployee> _userManager;
+        private readonly IUserStore<UserEmployee> _userStore;
         
 
-        public AccountController(UserIdentityContext identityContext)
+        public AccountController(UserIdentityContext identityContext,
+            UserManager<UserEmployee> userManager, IUserStore<UserEmployee> userStore)
         {
            
             _identityContext = identityContext;
-            
+            _userStore = userStore;
+            _userManager = userManager;
         }
 
 
@@ -87,10 +90,53 @@ namespace ResourceManager.Controllers
             return Ok(item);    
                      
         }
+        [HttpPost]
+        public async Task<IActionResult> addUser( string email, string password, 
+            string fullName, string dob, string address, string dayJoin,
+            string team, bool isActive, string phoneNumber)
+        {
+            var user = CreateUser();
+            user.UserName = email;
+            user.EmailConfirmed = true;
+            user.Email = email;
+            user.NormalizedEmail = email.ToUpper();
+            user.NormalizedUserName = email.ToUpper();
+            user.FullName = fullName;
+            user.dob = dob;
+            user.address = address;
+            user.dayJoin = dayJoin;
+            user.team = team;
+            user.IsActive = true;
+            user.PhoneNumber=phoneNumber;
 
+            await _userStore.SetUserNameAsync(user,email,CancellationToken
+                .None);
+
+            var result = await _userManager.CreateAsync(user,password);
+
+            if (result.Succeeded)
+            {
+                return Ok(user);
+            }
+            return BadRequest(result.Errors);
+        }
         public IActionResult Index()
         {
             return View();
+        }
+
+        private UserEmployee CreateUser()
+        {
+            try
+            {
+                return Activator.CreateInstance<UserEmployee>();
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(UserEmployee)}'. " +
+                    $"Ensure that '{nameof(UserEmployee)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using ResourceManager.Models.Entities;
 
 #nullable disable
 
-namespace ResourceManager.Migrations
+namespace ResourceManager.Migrations.Resource
 {
     [DbContext(typeof(ResourceContext))]
     partial class ResourceContextModelSnapshot : ModelSnapshot

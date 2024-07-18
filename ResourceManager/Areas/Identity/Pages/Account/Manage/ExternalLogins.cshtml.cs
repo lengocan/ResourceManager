@@ -11,19 +11,20 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ResourceManager.Areas.Identity.Data;
 
 namespace ResourceManager.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IUserStore<IdentityUser> _userStore;
+        private readonly UserManager<UserEmployee> _userManager;
+        private readonly SignInManager<UserEmployee> _signInManager;
+        private readonly IUserStore<UserEmployee> _userStore;
 
         public ExternalLoginsModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            IUserStore<IdentityUser> userStore)
+            UserManager<UserEmployee> userManager,
+            SignInManager<UserEmployee> signInManager,
+            IUserStore<UserEmployee> userStore)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -69,7 +70,7 @@ namespace ResourceManager.Areas.Identity.Pages.Account.Manage
                 .ToList();
 
             string passwordHash = null;
-            if (_userStore is IUserPasswordStore<IdentityUser> userPasswordStore)
+            if (_userStore is IUserPasswordStore<UserEmployee> userPasswordStore)
             {
                 passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
             }

@@ -9,11 +9,11 @@ namespace ResourceManager.Controllers
     public class AssignmentController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEmployee> _userManager;
         private readonly UserIdentityContext _identityContext;
 
 
-        public AssignmentController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, UserIdentityContext identityContext)
+        public AssignmentController(RoleManager<IdentityRole> roleManager, UserManager<UserEmployee> userManager, UserIdentityContext identityContext)
         {
             _roleManager = roleManager;
             _userManager = userManager;

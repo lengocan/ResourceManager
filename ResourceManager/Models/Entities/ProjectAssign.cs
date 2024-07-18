@@ -12,6 +12,6 @@ namespace ResourceManager.Models.Entities
 
         public Guid UserEmployeeId { get; set; }
 
-
+        
     }
 }

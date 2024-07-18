@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ResourceManager.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using ResourceManager.Data;
+using ResourceManager.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ x.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddDbContext<UserIdentityContext>(x =>
 x.UseSqlServer(builder.Configuration.GetConnectionString("UserContextConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
+builder.Services.AddDefaultIdentity<UserEmployee>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<UserIdentityContext>();
 
 builder.Services.AddRazorPages();

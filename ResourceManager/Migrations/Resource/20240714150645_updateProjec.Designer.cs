@@ -9,11 +9,11 @@ using ResourceManager.Models.Entities;
 
 #nullable disable
 
-namespace ResourceManager.Migrations
+namespace ResourceManager.Migrations.Resource
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240714100359_projectassignToString")]
-    partial class projectassignToString
+    [Migration("20240714150645_updateProjec")]
+    partial class updateProjec
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
