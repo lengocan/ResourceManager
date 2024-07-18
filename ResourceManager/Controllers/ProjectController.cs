@@ -198,8 +198,50 @@ namespace ResourceManager.Controllers
 
             return StatusCode(500, "Error assigning user to project");
         }
+        [Route("/Project/AssignMultipleUser")]
+        [HttpPost]
 
-        #endregion
+        public async Task<IActionResult> AssignMultipleUser(string projectId, List<string> userIds)
+        {
+
+
+            foreach (var userid in userIds)
+            {
+                var user = _userManager.Users.FirstOrDefault(x => x.Id.ToString() == userid);
+                if (user == null)
+                {
+                    return BadRequest("User not found");
+                }
+
+                // Find the project by ID (assuming you have a method to do so)
+                var project = await _context.Projects.FindAsync(Guid.Parse(projectId));
+                if (project == null)
+                {
+                    return BadRequest("Project not found");
+                }
+
+                // Create the project assignment
+                var projectAssign = new ProjectAssign
+                {
+                    ProjectId = Guid.Parse(projectId),
+                    UserEmployeeId = Guid.Parse(userid)
+                };
+
+                // Add the assignment to the context
+                _context.ProjectAssigns.Add(projectAssign);
+                
+
+                
+            }
+            var result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return Ok();
+            }
+            return StatusCode(500, "Error assigning user to project");
+        }
+
 
         [HttpGet]
         [Route("/Project/GetAssignee/{projectId}")]
@@ -237,6 +279,8 @@ namespace ResourceManager.Controllers
                 u.IsActive,
             }));
         }
+
+
         [HttpDelete]
         [Route("/Project/DeleteAssign/{projectId}/{userId}")]
         public async Task<IActionResult> DeleteAssign(Guid projectId, Guid userId)
@@ -259,6 +303,6 @@ namespace ResourceManager.Controllers
 
             return StatusCode(500, "Error removing user assignment from project");
         }
-
+        #endregion
     }
 }

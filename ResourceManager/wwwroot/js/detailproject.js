@@ -138,13 +138,16 @@ $('#ModalAssignProjectPartial').on('show.bs.modal', function () {
 function addAssgin() {
     var pathArray = window.location.pathname.split('/');
     var projectId = pathArray[pathArray.length - 1];
-    var userId = $('#selectaccountAssign').val();
+    var userIds = $('#selectaccountAssign').val();
+    console.log(userIds)
+    console.log(projectId)
     $.ajax({
-        url: '/Project/Assign/',
+        url: '/Project/AssignMultipleUser/',
         type: 'POST',
+        traditional: true,
         data: {
             projectId: projectId,
-            userId:userId
+            userIds:userIds
         },
         success: function (data) {
             console.log("assing",data)
@@ -152,7 +155,7 @@ function addAssgin() {
             $('#ModalAssignProjectPartial').modal('hide')
             renderAssignInfo(projectId)
         },
-        error: function () {
+        error: function (data) {
             console.log("assing", data)
             toastr.error('Failed to assign');
         }

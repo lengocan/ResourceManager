@@ -41,10 +41,7 @@ namespace ResourceManager.Controllers
             return View();
         }
 
-        public IActionResult ToDoList()
-        {
-            return View();
-        }
+        
         
         /*[Route("Team")]
         public IActionResult Team()
