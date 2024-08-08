@@ -1,0 +1,48 @@
+﻿﻿<!-- Modal -->
+<div class="modal fade" id="modalCreateUpdateBanner" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="Banner">Banner</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col">
+                        <input type="text" id="idBanner" value="" hidden />
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label fw-bold">Color</label>
+                            <select class="form-control modalteam" id="color">
+                                <option value="" disabled selected>Select Color</option>
+                                <option value="1">Blue</option>
+                                <option value="2">Red</option>
+                                <option value="3">Green</option>
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label fw-bold">Effect</label>
+                            <select class="form-control modalteam" id="effect">
+                                <option value="" disabled selected>Select Effect</option>
+                                <option value="1">Blur</option>
+                                <option value="2">Light</option>
+                                <option value="3">Dark</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="instruction" class="form-label fw-bold">Content</label>
+                            <textarea class="form-control" id="content" rows="5" placeholder="Enter banner content here"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="addBanner()">Add Banner</button>
+            </div>
+        </div>
+    </div>
+</div>

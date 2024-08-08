@@ -1,0 +1,29 @@
+﻿﻿<!-- Modal -->
+<div class="modal fade" id="modalCreateUpdatePost" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="Post">Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col">
+
+                        <input type="text" id="idPost" value="" hidden />
+                        <input type="text" id="userCreated" value="" hidden />
+
+                        <div class="mb-3">
+                            <label for="instruction" class="form-label fw-bold">Content</label>
+                            <textarea class="form-control" id="content" rows="5" placeholder="Enter your post content here"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="addPost()">Add Post</button>
+            </div>
+        </div>
+    </div>
+</div>

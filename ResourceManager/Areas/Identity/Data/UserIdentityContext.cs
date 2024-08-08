@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 
 namespace ResourceManager.Data;
 
-public class UserIdentityContext : IdentityDbContext<IdentityUser>
+public class UserIdentityContext : IdentityDbContext<UserEmployee>
 {
     public UserIdentityContext(DbContextOptions<UserIdentityContext> options)
         : base(options)
@@ -27,7 +27,7 @@ public class UserIdentityContext : IdentityDbContext<IdentityUser>
 
     public override DbContextId ContextId => base.ContextId;
 
-    public override DbSet<IdentityUser> Users { get => base.Users; set => base.Users = value; }
+    public override DbSet<UserEmployee> Users { get => base.Users; set => base.Users = value; }
     public override DbSet<IdentityUserClaim<string>> UserClaims { get => base.UserClaims; set => base.UserClaims = value; }
     public override DbSet<IdentityUserLogin<string>> UserLogins { get => base.UserLogins; set => base.UserLogins = value; }
     public override DbSet<IdentityUserToken<string>> UserTokens { get => base.UserTokens; set => base.UserTokens = value; }

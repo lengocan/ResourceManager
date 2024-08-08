@@ -33,3 +33,41 @@ function loadTable() {
         }
     })
 }
+$('#btnAddInfo').on('click', function () {
+
+    var fullName = $('.addmodalfullname').val();
+    var phone = $('.addmodalnumber').val();
+    var dob = $('.addmodalbirthday').val();
+    var dayJoin = $('.addmodaljoinday').val();
+    var address = $('.addmodaladdress').val();
+    var team = $('.addmodalteam').val();
+    var email = $('.addmodalemail').val();
+    var password = $('.addmodalpassword').val();
+
+
+    $.ajax({
+        url: '/Account/addUser',
+        type: 'POST',
+        data: {
+            email: email,
+            password: password,
+            fullName: fullName,
+            dob: dob,
+            address: address,
+            dayJoin: dayJoin,
+            team: team,
+            isActive: true,
+            phoneNumber: phone
+        },
+        success: function (data) {
+            console.log(data)
+            $('#addInfoUser').modal('hide');
+            loadTable();
+            toastr.success("Success add user")
+        },
+        error: function () {
+            alert('Them that bai')
+        }
+    });
+
+});

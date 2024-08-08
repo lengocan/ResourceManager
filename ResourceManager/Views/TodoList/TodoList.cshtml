@@ -5,35 +5,74 @@
 
 <section>
 
+     <style>
+        .task-list {
+            display: none;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+            .task-item input[type="checkbox"] {
+                margin-right: 10px;
+            }
+
+            .task-item.completed {
+                text-decoration: line-through;
+                color: gray;
+            }
+
+        .project-label {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-add-task {
+            margin-left: 10px;
+        }
+    </style>
 
 
-    <div class="d-flex justify-content-between gap-4">
-        <article class="d-grid flex-grow-1">
-            @* list item *@
-            <div class="bg-white px-3 py-2 shadow rounded">
+
+    <div class="container mt-5">
+        <h2 class="mb-4">To-Do List</h2>
+        
+        <div class="mb-3">
+            <div class="bg-white px-3 py-2 shadow rounded" id="listProjectTDL">
+                <div class="mb-3 p-3 mt-3 d-flex justify-content-around">
+                    <h5 class="projectNameTDL">Project Name</h5>                   
+                    <a href="#" class="btn btn-primary shadow rounded pl" data-bs-toggle="modal" data-bs-target="#ModalAddToDoTaskPartial">Add Task</a>
+                </div>
                 <table class="table table-bordered">
                     <thead>
                         <tr class="text-center">
-                            <th>Project Number</th>
-                            <th>Project Name</th>
-                            <th>Branch</th>
-                            <th>Status</th>
-                            <th>Priority</th>
-                            <th>Create Day</th>
-                            <th>Due Day</th>
-                            <th>Turn time</th>
+                            <th>Check</th>
+                            <th>Task Name</th>
+                            <th>Estimate hours</th>
+                            <th>Is Complete</th>
+                                                    
+                            <th class="w-px-100 align-middle">Event</th>
                         </tr>
                     </thead>
-                    <tbody id="listEmployee">
+                    <tbody id="listTask">
                         <tr>
-                            <td colspan="8" class="text-center">No data</td>
+                            <td colspan="5" class="text-center">No data</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </article>
+            
+            
+        </div>
+        
     </div>
 </section>
+@Html.Partial("ModalAddToDoTaskPartial")
 @section Scripts {
     <script src="~/js/todolist.js"></script>
 }

@@ -12,8 +12,8 @@ using ResourceManager.Models.Entities;
 namespace ResourceManager.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240714100359_projectassignToString")]
-    partial class projectassignToString
+    [Migration("20240725123443_UPDATETODOLIST1")]
+    partial class UPDATETODOLIST1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,32 @@ namespace ResourceManager.Migrations
                     b.HasKey("ProjectId", "UserEmployeeId");
 
                     b.ToTable("ProjectAssigns");
+                });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.TodoList", b =>
+                {
+                    b.Property<Guid>("TodoListId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("estimateHour")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("taskName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TodoListId");
+
+                    b.ToTable("TodoList");
                 });
 #pragma warning restore 612, 618
         }

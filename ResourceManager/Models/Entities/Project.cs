@@ -18,5 +18,8 @@ namespace ResourceManager.Models.Entities
         public string Branch { get; set; }
         public string priority { get; set; } = null!;
         public string instruction { get; set; } = null!; //gan khi vao detail
+
+
+
     }
 }

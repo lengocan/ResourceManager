@@ -1,0 +1,32 @@
+﻿﻿<!-- Modal -->
+<div class="modal fade" id="ModalAddToDoTaskPartial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="modalProjectTitleTDL">Project Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col">
+                        <input type="text" id="idProjectTodo" value="" hidden />
+
+                        <div class="mb-3">
+                            <label for="projectName" class="form-label fw-bold">Task name</label>
+                            <input type="text" class="form-control" id="taskName" value="" placeholder="Input your task name">
+                        </div>
+                                            
+                        <div class="mb-3">
+                            <label for="dueday" class="form-label fw-bold">Estimate hours</label>
+                            <input type="text" class="form-control" id="estimateHour" value="" placeholder="Input number of hours">
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="AddTask()">Add task</button>
+            </div>
+        </div>
+    </div>
+</div>

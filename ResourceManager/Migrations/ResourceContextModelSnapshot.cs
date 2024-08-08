@@ -82,6 +82,32 @@ namespace ResourceManager.Migrations
 
                     b.ToTable("ProjectAssigns");
                 });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.TodoList", b =>
+                {
+                    b.Property<Guid>("TodoListId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("estimateHour")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("taskName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TodoListId");
+
+                    b.ToTable("TodoList");
+                });
 #pragma warning restore 612, 618
         }
     }

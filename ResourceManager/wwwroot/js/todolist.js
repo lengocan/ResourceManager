@@ -8,92 +8,148 @@
 
 $(document).ready(() => {
     console.log("hello");
-    renderTableRoles();
-    
+    renderProject()
 });
 
-function CreateUpdateRoles() {
-    var id = $('#idRoles').val();
-    var quyen = $('#roleName').val();
-    
-    
 
-    if (id === '') {
-        $.ajax({
-            url: '/Assignment/CreateRole',
-            type: 'POST',
-            data: {
-                name: quyen              
-            },
-            success: function (data) {
-                console.log("QUYEN DC TAO LA",data);
-                if (data) {
-                    toastr.success('Add success!');
-                    renderTableRoles();
-                    $('#modalCreateUpdateRoles').modal('hide');
-                }
-            },
-            error: function (error) {
-                toastr.error('Quyền đã tồn tại');
-                $('#modalCreateUpdateRoles').modal('hide');
-            }
-        });
-    }
-}
+let expandedProjectId = null;
 
-function renderTableRoles() {
-    $('#listrole').empty();
+function renderProject() {
+    $('#listProjectTDL').empty();
+
     $.ajax({
-        url: '/Assignment/GetAllRoles',
+        url: '/Project/getAllProjectAsCurrentUser',
         type: 'GET',
         success: function (data) {
             console.log("Danh sach du lieu: ", data);
             if (data.length > 0) {
                 data.forEach((item, index) => {
-                    var parentName = data.filter(x => x.categoryId === item.parentId)[0].categoryName;
-                    $('#listrole').append(`
-								<tr>
-									<td class="text-center"><input type="checkbox"/></td>
-                                    <td>${item.name}</td>                                  
-									<td>Loading...</td>
-									<td>Loading...</td>
-									<td>Loading...</td>
-									<td class="text-center">
-										<button type="button" class="btn btn-primary" onclick="EditRole('${item.id}')">Sửa</button>
-										<button type="button" class="btn btn-danger" onclick="DeleteRole('${item.id}')">Xóa</button>
-									</td>
-								</tr>
-							`);
+                    $('#listProjectTDL').append(`
+					<div class="mb-3 p-3 mt-3 d-flex justify-content-around">
+                            <h5 class="project-label" onclick="toggleTaskList('${item.projectId}')">${item.projectName}</h5>
+                            <a href="#" class="btn btn-primary shadow rounded pl" data-bs-toggle="modal" data-bs-target="#ModalAddToDoTaskPartial" onclick="setProjectId('${item.projectId}')">Add Task</a>
+                        </div>
+                
+                `);
+                    
+                    $('#listProjectTDL').append(`
+                        <div id="task-list-${item.projectId}" class="task-list"></div>
+                    `);
+
+                    renderTask(item.projectId);
                 });
+                if (expandedProjectId) {
+                    $(`#task-list-${expandedProjectId}`).show();
+                }
             }
             else {
-                $('#listrole').append(`
+                $('#listproject').append(`
 							<tr>
-								<td class="text-center" colspan="5">Không có dữ liệu</td>
+								<td class="text-center" colspan="8">No data</td>
 							</tr>
 						`);
             }
-            
+
         },
         error: function (error) {
             console.log(error);
         }
     });
 }
-function DeleteRole(id) {
+function toggleTaskList(projectId) {
+    $(`#task-list-${projectId}`).toggle();
+    expandedProjectId = $(`#task-list-${projectId}`).is(':visible') ? projectId : null;
+}
+function setProjectId(projectId) {
+    $('#idProjectTodo').val(projectId);
+}
+function renderTask(projectId) {
+    $(`#task-list-${projectId}`).empty();
     $.ajax({
-        url: '/Assignment/DeleteRole/' + id,
+        url: '/TodoList/getAllTask/' + projectId,
+        type: 'GET',
+        success: function (data) {
+            console.log("Danh sach du lieu to do list: ", data);
+            if (data.length > 0) {
+                data.forEach((item, index) => {
+                    $(`#task-list-${projectId}`).append(`
+
+
+                        <div class="task-item ${item.isCompleted ? 'Completed' : ''}">
+                            <input type="checkbox" class="form-check-input" ${item.isCompleted ? 'checked' : ''} onclick="toggleCompleteTask('${item.todoListId}', this)">
+                            <span>${item.taskName}</span>
+                            <span class="ms-auto">${item.estimateHour} hours</span>
+                            <button type="button" class="btn btn-primary ms-2" onclick="editTask('${item.todoListId}')">Edit</button>
+                            <button type="button" class="btn btn-danger ms-2" onclick="deleteTask('${item.todoListId}')">Delete</button>
+                        </div>
+                    `);
+                });
+            } else {
+                $(`#task-list-${projectId}`).append(`
+                    <div class="text-center">No tasks found</div>
+                `);
+            }
+        }
+    });
+}
+
+function AddTask() {
+    var projectId = $('#idProjectTodo').val();
+    var taskName = $('#taskName').val();
+    var estimateHour = $('#estimateHour').val();
+    console.log(projectId);
+    
+    $.ajax({
+        url: '/ToDoList/addTask/' + projectId,
+        type: 'POST',
+        data: {
+            taskName: taskName,
+            estimateHour:estimateHour
+        },
+        success: function (data) {
+            console.log(data)
+            toastr.success("Success add task");
+            $('#ModalAddToDoTaskPartial').modal('hide');
+            expandedProjectId = projectId; 
+            renderProject();
+        }
+
+    })
+}
+function deleteTask(taskId) {
+    
+    $.ajax({
+        url: '/ToDoList/deletetask/' + taskId,
         type: 'DELETE',
         success: function (data) {
-            if (data) {
-                renderTableRoles();
-            }
-            else {
-                alert('Xóa sản phẩm thất bại');
-            }
+            console.log("delete task", data)
+
+            toastr.success("Success delete task")
+            renderProject();
         },
         error: function (error) {
-            console.log(error);
+            console.log(error)
         }
-    });
+
+    })
 }
+
+function toggleCompleteTask(taskId, checkbox) {
+    
+    var isComplete = checkbox.checked;
+    $.ajax({
+        url: '/ToDoList/updateStatus/' + taskId,
+        type: 'PATCH',
+        data: {
+            taskId: taskId,
+            isComplete: isComplete 
+        },
+        success: function (data) {
+            console.log(data);
+            toastr.success("This taks is completed");
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}         

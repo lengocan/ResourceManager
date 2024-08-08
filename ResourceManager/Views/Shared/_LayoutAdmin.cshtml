@@ -87,6 +87,10 @@
                         <i class="fa fa-keyboard me-2" id="Project"></i>Project</a>
                         <a asp-area="" asp-controller="Cart" asp-action="Cart" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Cart" ? "active" : "")">
                         <i class="fa fa-keyboard me-2" id="Project"></i>Cart</a>
+                        <a asp-area="" asp-controller="Banner" asp-action="Banner" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Banner" ? "active" : "")">
+                        <i class="fa fa-keyboard me-2" id="Banner"></i>Banner</a>
+                        <a asp-area="" asp-controller="Post" asp-action="Post" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Post" ? "active" : "")">
+                        <i class="fa fa-keyboard me-2" id="Post"></i>Post</a>
                                 
                             </div>
                 </div> 
@@ -443,7 +447,7 @@
     <script src="~/Admin/libTemplate/tempusdominus/js/moment.min.js"></script>
     <script src="~/Admin/libTemplate/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="~/Admin/libTemplate/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <script src="~/js/admin.js"></script>
     <!-- Template Javascript -->
     <script src="~/Admin/js/main.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.css">

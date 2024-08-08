@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ResourceManager.Areas.Identity.Data;
 using ResourceManager.Data;
 using ResourceManager.Models.Entities;
+using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ResourceManager.Controllers
@@ -36,6 +37,48 @@ namespace ResourceManager.Controllers
         {
             var item = await _context.Projects.ToListAsync();
             return Ok(item);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult>getAllProjectAsCurrentUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+
+            }
+            var projectAssigns = await _context.ProjectAssigns
+                .Where(t=> t.UserEmployeeId.ToString()==userId).ToListAsync();
+
+            var projectIds= projectAssigns.Select(pa=>pa.ProjectId).ToList();
+
+            var projects = new List<Project>(); 
+
+            foreach (var item in projectIds)
+            {
+                var project = await _context.Projects.FirstOrDefaultAsync(x => x.ProjectId == item);
+
+                if (project != null)
+                {
+                    projects.Add(project);
+                }
+
+            }
+
+            return Ok(projects.Select(u=> new
+            {
+                u.ProjectId,
+                u.projectName,
+                u.projectNumber,
+                u.status,
+                u.createDay,
+                u.dueDay,
+                u.turntime,
+                u.Branch,
+                u.priority,
+                u.instruction
+            }));
         }
 
         [HttpPost]
