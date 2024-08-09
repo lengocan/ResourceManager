@@ -12,8 +12,8 @@ using ResourceManager.Models.Entities;
 namespace ResourceManager.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240725123443_UPDATETODOLIST1")]
-    partial class UPDATETODOLIST1
+    [Migration("20240809134922_projectAttachFile2")]
+    partial class projectAttachFile2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,13 +25,32 @@ namespace ResourceManager.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ResourceManager.Models.Entities.AttachFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AttachFiles");
+                });
+
             modelBuilder.Entity("ResourceManager.Models.Entities.Project", b =>
                 {
                     b.Property<Guid>("ProjectId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AssigneeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Branch")
@@ -84,6 +103,19 @@ namespace ResourceManager.Migrations
                     b.HasKey("ProjectId", "UserEmployeeId");
 
                     b.ToTable("ProjectAssigns");
+                });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.ProjectAttachFile", b =>
+                {
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("attachFileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProjectId", "attachFileId");
+
+                    b.ToTable("ProjectAttachFiles");
                 });
 
             modelBuilder.Entity("ResourceManager.Models.Entities.TodoList", b =>

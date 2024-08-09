@@ -25,7 +25,7 @@ namespace ResourceManager.Controllers
 
         #region CRUDproject
 
-        
+
 
         public IActionResult Project()
         {
@@ -40,7 +40,7 @@ namespace ResourceManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>getAllProjectAsCurrentUser()
+        public async Task<IActionResult> getAllProjectAsCurrentUser()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
@@ -49,11 +49,11 @@ namespace ResourceManager.Controllers
 
             }
             var projectAssigns = await _context.ProjectAssigns
-                .Where(t=> t.UserEmployeeId.ToString()==userId).ToListAsync();
+                .Where(t => t.UserEmployeeId.ToString() == userId).ToListAsync();
 
-            var projectIds= projectAssigns.Select(pa=>pa.ProjectId).ToList();
+            var projectIds = projectAssigns.Select(pa => pa.ProjectId).ToList();
 
-            var projects = new List<Project>(); 
+            var projects = new List<Project>();
 
             foreach (var item in projectIds)
             {
@@ -66,7 +66,7 @@ namespace ResourceManager.Controllers
 
             }
 
-            return Ok(projects.Select(u=> new
+            return Ok(projects.Select(u => new
             {
                 u.ProjectId,
                 u.projectName,
@@ -85,17 +85,17 @@ namespace ResourceManager.Controllers
         //DateTime createDay, DateTime dueday
         public async Task<IActionResult> addProject(string projectName, string status, DateTime createDay, DateTime dueday, string priority, string branch, string instruction)
         {
-            
+
             var item1 = await _context.Projects.ToListAsync();
             int number = item1.Count() + 1;
-            var turnTimeCal = dueday-createDay;
+            var turnTimeCal = dueday - createDay;
 
             var item = new Project
             {
                 ProjectId = Guid.NewGuid(),
                 projectName = projectName,
                 //ProjectNumber
-                Branch= branch,
+                Branch = branch,
                 createDay = createDay,
                 dueDay = dueday,
                 priority = priority,
@@ -109,7 +109,7 @@ namespace ResourceManager.Controllers
             _context.Projects.Add(item);
             await _context.SaveChangesAsync();
             return Ok(item);
-            
+
         }
 
         [Route("/Project/DeleteProject/{id}")]
@@ -131,7 +131,7 @@ namespace ResourceManager.Controllers
 
                 return StatusCode(500, e.Message);
             }
-            
+
         }
 
         [Route("/Project/UpdateProject/{id}")]
@@ -145,7 +145,7 @@ namespace ResourceManager.Controllers
                 var item = await _context.Projects.FirstOrDefaultAsync(x => x.ProjectId == id);
                 if (item == null) return NotFound();
 
-                
+
                 item.projectName = projectName;
                 item.Branch = branch;
                 item.priority = priority;
@@ -208,9 +208,9 @@ namespace ResourceManager.Controllers
         [Route("/Project/Assign")]
         [HttpPost]
 
-        public async Task<IActionResult> Assign( string projectId, string userId)
+        public async Task<IActionResult> Assign(string projectId, string userId)
         {
-            var user = _userManager.Users.FirstOrDefault(x=>x.Id.ToString() == userId);
+            var user = _userManager.Users.FirstOrDefault(x => x.Id.ToString() == userId);
             if (user == null)
             {
                 return BadRequest("User not found");
@@ -272,9 +272,9 @@ namespace ResourceManager.Controllers
 
                 // Add the assignment to the context
                 _context.ProjectAssigns.Add(projectAssign);
-                
 
-                
+
+
             }
             var result = await _context.SaveChangesAsync();
 
@@ -290,7 +290,7 @@ namespace ResourceManager.Controllers
         [Route("/Project/GetAssignee/{projectId}")]
         public async Task<IActionResult> GetAssignee(Guid projectId)
         {
-            
+
             var projectAssigns = await _context.ProjectAssigns
                                     .Where(pa => pa.ProjectId == projectId)
                                     .ToListAsync();
@@ -301,14 +301,14 @@ namespace ResourceManager.Controllers
 
             foreach (var item in assigneeIds)
             {
-                var user = await _userManager.Users.OfType<UserEmployee>().FirstOrDefaultAsync(x => x.Id ==item.ToString());
+                var user = await _userManager.Users.OfType<UserEmployee>().FirstOrDefaultAsync(x => x.Id == item.ToString());
 
                 if (user != null)
                 {
                     users.Add(user);
                 }
 
-            }        
+            }
             return Ok(users.Select(u => new
             {
                 u.Id,
@@ -345,6 +345,65 @@ namespace ResourceManager.Controllers
             }
 
             return StatusCode(500, "Error removing user assignment from project");
+        }
+        #endregion
+
+        #region
+        [HttpPost]
+        [Route("/Project/UploadFile")]
+
+        public async Task<IActionResult> UploadFile(Guid projectId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            // Generate a unique file name
+            var fileName = Path.GetFileName(file.FileName);
+            var filePath = Path.Combine("wwwroot/filePath", fileName);
+           
+            // Save the file to the server
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Create a new AttachFile entity
+            var attachFile = new AttachFile
+            {
+                Id = Guid.NewGuid(),
+                ProjectId = projectId,
+                FileName = fileName,
+                FilePath = $"/filePath/{fileName}",
+                UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString()) // Get current user ID
+            };
+
+            _context.AttachFiles.Add(attachFile);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "File uploaded successfully." });
+
+        }
+
+        [HttpGet]
+        [Route("/Project/GetProjectAttachments/{id}")]
+        public IActionResult GetProjectAttachments(Guid id)
+        {
+            var attachments = _context.ProjectAttachFiles
+                .Where(pa => pa.ProjectId == id)
+                .Join(_context.AttachFiles,
+                    pa => pa.attachFileId,
+                    af => af.Id,
+                    (pa, af) => new
+                    {
+                        af.FileName,
+                        af.FilePath,
+                        FileIcon = "~/wwwroot/icon.png" // Set your icon path or logic here
+                    })
+                .ToList();
+
+            return Json(attachments);
         }
         #endregion
     }

@@ -6,7 +6,7 @@ namespace ResourceManager.Models.Entities
 {
     public class ProjectAssign
     {
-        [Key]
+       
         public Guid ProjectId { get; set; }
         
 

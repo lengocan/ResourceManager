@@ -1,0 +1,21 @@
+﻿<div class="modal fade" id="ModalUploadFile" tabindex="-1" aria-labelledby="ModalUploadFileLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalUploadFileLabel">Upload File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+                <form asp-action="UploadFile" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="projectId" value="@Model.ProjectId" />
+                    <div class="form-group">
+                        <label for="file">Upload File</label>
+                        <input type="file" name="file" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3" onclick="addFile()">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

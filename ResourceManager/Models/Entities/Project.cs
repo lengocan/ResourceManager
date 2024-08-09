@@ -6,7 +6,7 @@ namespace ResourceManager.Models.Entities
     {
         [Key]
         public Guid ProjectId { get; set; }
-        public Guid AssigneeId { get; set; }    //gan khi vao detail
+       
         public string projectName { get; set; } = null!;
         public string projectNumber { get; set; } = null!; //tu gan
 
@@ -19,7 +19,7 @@ namespace ResourceManager.Models.Entities
         public string priority { get; set; } = null!;
         public string instruction { get; set; } = null!; //gan khi vao detail
 
-
+        
 
     }
 }

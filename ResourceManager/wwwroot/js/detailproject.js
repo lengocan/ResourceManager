@@ -15,7 +15,7 @@ $(document).ready(() => {
     
     renderPageProject(projectId);
     renderAssignInfo(projectId);
-    
+    UpdateProjectDetail(projectId);
 });
 
 function UpdateProjectDetail() {
@@ -233,4 +233,54 @@ function deleleAssign(userId) {
             console.log(error)
         }
     })
+}
+
+function UpdateProjectDetail(projectId) {
+    
+
+    $.ajax({
+        url: `/Project/GetProjectAttachments/${projectId}`,
+        type: 'GET',
+        success: function (data) {
+            var filesList = $('.files-list');
+            filesList.empty();
+            console.log(data)
+            data.forEach(function (file) {
+                var fileBox = `
+                    <div class="file-box">
+                        <a href="${file.filePath}" download><img src="${file.fileIcon}" class="img-responsive img-thumbnail" alt="${file.fileName}"></a>
+                        <p class="font-13 mb-1 text-muted"><small>${file.fileName}</small></p>
+                    </div>`;
+                filesList.append(fileBox);
+            });
+        },
+        error: function () {
+            alert("Failed to update file list.");
+        }
+    });
+}
+
+function addFile() {
+    var formData = new FormData($('#uploadFileForm')[0]);
+    var fileInput = $('input[name="file"]')[0].files[0];
+
+    if (!fileInput) {
+        alert("Please select a file.");
+        return;
+    }
+
+    $.ajax({
+        url: '/Project/UploadFile',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            console.log(response)
+            $('#ModalUploadFile').modal('hide');
+        },
+        error: function (xhr, status, error) {
+            alert("File upload failed. Please try again.");
+        }
+    });
 }

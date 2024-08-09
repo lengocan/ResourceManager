@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ResourceManager.Migrations
 {
     /// <inheritdoc />
-    public partial class UPDATETODOLIST1 : Migration
+    public partial class projectAttachFile2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,20 +14,18 @@ namespace ResourceManager.Migrations
             
 
             migrationBuilder.CreateTable(
-                name: "TodoList",
+                name: "ProjectAttachFiles",
                 columns: table => new
                 {
-                    TodoListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    taskName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    estimateHour = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    isCompleted = table.Column<bool>(type: "bit", nullable: false)
+                    attachFileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TodoList", x => x.TodoListId);
+                    table.PrimaryKey("PK_ProjectAttachFiles", x => new { x.ProjectId, x.attachFileId });
                 });
+
+            
         }
 
         /// <inheritdoc />
@@ -35,7 +33,9 @@ namespace ResourceManager.Migrations
         {
            
             migrationBuilder.DropTable(
-                name: "TodoList");
+                name: "ProjectAttachFiles");
+
+            
         }
     }
 }
