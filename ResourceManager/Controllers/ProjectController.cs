@@ -348,10 +348,10 @@ namespace ResourceManager.Controllers
         }
         #endregion
 
-        #region
-        [HttpPost]
-        [Route("/Project/UploadFile")]
 
+        #region
+        [Route("/Project/UploadFile")]
+        [HttpPost]
         public async Task<IActionResult> UploadFile(Guid projectId, IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -361,8 +361,19 @@ namespace ResourceManager.Controllers
 
             // Generate a unique file name
             var fileName = Path.GetFileName(file.FileName);
-            var filePath = Path.Combine("wwwroot/filePath", fileName);
-           
+
+            // Define the directory path including the projectId
+            var directoryPath = Path.Combine("wwwroot", "filePath", projectId.ToString());
+
+            // Ensure the directory exists
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            // Combine the directory path with the file name
+            var filePath = Path.Combine(directoryPath, fileName);
+
             // Save the file to the server
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -375,34 +386,33 @@ namespace ResourceManager.Controllers
                 Id = Guid.NewGuid(),
                 ProjectId = projectId,
                 FileName = fileName,
-                FilePath = $"/filePath/{fileName}",
-                UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString()) // Get current user ID
+                FilePath = $"/filePath/{projectId}/{fileName}", // Update the file path to include projectId
+               
             };
 
             _context.AttachFiles.Add(attachFile);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "File uploaded successfully." });
+            return Ok();
 
         }
 
         [HttpGet]
         [Route("/Project/GetProjectAttachments/{id}")]
-        public IActionResult GetProjectAttachments(Guid id)
+        public async Task<IActionResult> GetProjectAttachments(Guid id)
         {
-            var attachments = _context.ProjectAttachFiles
-                .Where(pa => pa.ProjectId == id)
-                .Join(_context.AttachFiles,
-                    pa => pa.attachFileId,
-                    af => af.Id,
-                    (pa, af) => new
-                    {
-                        af.FileName,
-                        af.FilePath,
-                        FileIcon = "~/wwwroot/icon.png" // Set your icon path or logic here
-                    })
-                .ToList();
+            // Fetch all attachments related to the project with the given ID
+            var attachments = await _context.AttachFiles
+                .Where(af => af.ProjectId == id)
+                .Select(af => new
+                {
+                    af.FileName,
+                    af.FilePath,
+                    // You can include additional properties here as needed
+                })
+                .ToListAsync();
 
+            // Return the result as an HTTP 200 OK response
             return Json(attachments);
         }
         #endregion

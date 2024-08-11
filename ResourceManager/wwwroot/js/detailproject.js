@@ -21,7 +21,7 @@ $(document).ready(() => {
 function UpdateProjectDetail() {
     var pathArray = window.location.pathname.split('/');
     var projectId = pathArray[pathArray.length - 1];
-    console.log("id:", projectId)
+   // console.log("id:", projectId)
     var projectName = $('#projectNameEdit').val();
     var status = $("#statusEdit").val();
     var branch = $('#branchEdit').val();
@@ -46,7 +46,7 @@ function UpdateProjectDetail() {
             },
             success: function (data) {
                 if (data) {
-                    console.log("update ne",data)
+                    //console.log("update ne",data)
                     toastr.success("Success update project");
                     $("#ModalEditProjectPartial").modal('hide');
                     renderPageProject(projectId);
@@ -64,7 +64,7 @@ function renderPageProject(projectId) {
         url: '/Project/getProjectByID/'+ projectId,
         type: 'GET',
         success: function (data) {
-            console.log("Danh sach du lieu 8: ", data); 
+           // console.log("Danh sach du lieu 8: ", data); 
             if (data) {
                 $('#projectName').text(data.projectName)
                 $('#projectNumber').text(data.projectNumber)
@@ -83,7 +83,7 @@ function renderPageProject(projectId) {
 
         },
         error: function (error) {
-            console.log(error);
+            //console.log(error);
         }
     });
 }
@@ -92,7 +92,7 @@ $('#ModalEditProjectPartial').on('show.bs.modal', function () {
     // Get the button that triggered the modal
     var pathArray = window.location.pathname.split('/');
     var projectId = pathArray[pathArray.length - 1];
-    console.log(projectId)
+   // console.log(projectId)
     // Call the function to load the project data
     renderEditProject(projectId)
 });
@@ -104,7 +104,7 @@ function renderEditProject(projectId) {
         url: '/Project/getProjectByID/' + projectId,
         type: 'GET',
         success: function (data) {
-            console.log("Danh sach du lieu 9: ", data);
+           // console.log("Danh sach du lieu 9: ", data);
             if (data) {
 
                 $('#idProject').val(data.projectId)
@@ -123,7 +123,7 @@ function renderEditProject(projectId) {
             }
         },
         error: function (error) {
-            console.log(error);
+          //  console.log(error);
         }
     }); 
 }
@@ -156,7 +156,7 @@ function addAssgin() {
             renderAssignInfo(projectId)
         },
         error: function (data) {
-            console.log("assing", data)
+            console.log("assing fail", data)
             toastr.error('Failed to assign');
         }
     })
@@ -237,22 +237,28 @@ function deleleAssign(userId) {
 
 function UpdateProjectDetail(projectId) {
     
+    $('#listFile').empty()
 
     $.ajax({
         url: `/Project/GetProjectAttachments/${projectId}`,
         type: 'GET',
         success: function (data) {
-            var filesList = $('.files-list');
-            filesList.empty();
+            
             console.log(data)
-            data.forEach(function (file) {
-                var fileBox = `
-                    <div class="file-box">
-                        <a href="${file.filePath}" download><img src="${file.fileIcon}" class="img-responsive img-thumbnail" alt="${file.fileName}"></a>
-                        <p class="font-13 mb-1 text-muted"><small>${file.fileName}</small></p>
-                    </div>`;
-                filesList.append(fileBox);
-            });
+            data.map((item, index) => {
+                $('#listFile').append(`
+                <tr>
+                    <td>${item.fileName}</td>
+                    
+                    <td>${item.filePath}</td>
+                    
+                    <td class="text-center">
+                
+                        <button class="btn btn-danger" onclick="DeleteBanner('${item.id}')">Delete</button>                      
+                    </td>
+                    
+                    </tr>`)
+            })
         },
         error: function () {
             alert("Failed to update file list.");
@@ -263,7 +269,8 @@ function UpdateProjectDetail(projectId) {
 function addFile() {
     var formData = new FormData($('#uploadFileForm')[0]);
     var fileInput = $('input[name="file"]')[0].files[0];
-
+    var pathArray = window.location.pathname.split('/');
+    var projectId = pathArray[pathArray.length - 1];
     if (!fileInput) {
         alert("Please select a file.");
         return;
@@ -275,12 +282,17 @@ function addFile() {
         data: formData,
         contentType: false,
         processData: false,
-        success: function (response) {
-            console.log(response)
+        success: function (data) {
+            console.log(data)
             $('#ModalUploadFile').modal('hide');
+            UpdateProjectDetail(projectId);
         },
-        error: function (xhr, status, error) {
-            alert("File upload failed. Please try again.");
+        error: function (error) {
+            console.log(error)
         }
     });
 }
+$('#uploadFileForm').submit(function (e) {
+    e.preventDefault(); // Prevent the default form submission
+    addFile();
+});
