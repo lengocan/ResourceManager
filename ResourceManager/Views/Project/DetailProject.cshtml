@@ -253,13 +253,12 @@
 
                             <article class="d-grid flex-grow-1">
                                 @* list item *@
-                                <div class="bg-white px-3 py-2 shadow rounded">
+                                <div class="bg-white px-3 py-2 shadow rounded col-6">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr class="text-center">
 
-                                                <th>File Name</th>
-                                                <th>File Path</th>
+                                                <th>File Name</th>                                                
                                                 
                                                 <th>Action</th>
 
@@ -267,7 +266,7 @@
                                         </thead>
                                         <tbody id="listFile">
                                             <tr>
-                                                <td colspan="3" class="text-center">No data</td>
+                                                <td colspan="2" class="text-center">No data</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -275,6 +274,9 @@
                             </article>
 
 
+                        </div>
+                        <div class="col-6 mt-4">
+                            <button class="btn-lg btn-primary" onclick="sendProject()">Send Project</button>
                         </div>
 
                     </div>

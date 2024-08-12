@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ResourceManager.Areas.Identity.Data;
@@ -6,6 +7,7 @@ using ResourceManager.Data;
 
 namespace ResourceManager.Controllers
 {
+    
     public class AssignmentController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -24,8 +26,9 @@ namespace ResourceManager.Controllers
         {
             return View();
         }
-        
+
         //Roles function here
+        [Authorize(Roles = "DM")]
         public IActionResult Role()
         {
             return View();
@@ -84,6 +87,7 @@ namespace ResourceManager.Controllers
 
         #region Perrmissions
         //Permission function here
+        [Authorize(Roles = "DM")]
         public IActionResult Permission()
         {
             return View();

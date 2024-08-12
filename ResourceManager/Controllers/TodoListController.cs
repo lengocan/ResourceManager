@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ResourceManager.Data;
 using ResourceManager.Models.Entities;
@@ -21,6 +22,7 @@ namespace ResourceManager.Controllers
         {
             return View();
         }
+        [Authorize]
         public IActionResult TodoList()
         {
             return View();

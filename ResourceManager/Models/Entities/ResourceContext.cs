@@ -9,6 +9,7 @@ namespace ResourceManager.Models.Entities
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectAttachFile> ProjectAttachFiles { get; set; }
         public DbSet<ProjectAssign> ProjectAssigns { get; set; }
+        public DbSet<SendProject> SendProjects { get; set; }
         public ResourceContext()
         {
         }

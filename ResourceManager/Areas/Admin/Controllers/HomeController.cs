@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ResourceManager.Areas.Admin.Controllers
 {
@@ -6,40 +7,18 @@ namespace ResourceManager.Areas.Admin.Controllers
     [Route("Admin")]
     public class HomeController : Controller
     {
-        [Route("")]
+        [Authorize(Roles = "DM")]
         public IActionResult Index()
         {
             return View();
         }
-        [Route("Project")]
-        public IActionResult Project()
-        {
-            return View();
-        }
+        [Authorize(Roles = "DM")]
         [Route("Employee")]
         public IActionResult Employee()
         {
             return View();
         }
-        [Route("Team")]
-        public IActionResult Team()
-        {
-            return View();
-        }
-        [Route("Event")]
-        public IActionResult Event()
-        {
-            return View();
-        }
-        [Route("Meeting")]
-        public IActionResult Meeting()
-        {
-            return View();
-        }
-        [Route("Cart")]
-        public IActionResult Cart()
-        {
-            return View();
-        }
+       
+       
     }
 }

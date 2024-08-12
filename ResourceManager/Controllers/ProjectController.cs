@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ResourceManager.Areas.Identity.Data;
 using ResourceManager.Data;
 using ResourceManager.Models.Entities;
+using System.Net.Mail;
 using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -352,48 +353,62 @@ namespace ResourceManager.Controllers
         #region
         [Route("/Project/UploadFile")]
         [HttpPost]
-        public async Task<IActionResult> UploadFile(Guid projectId, IFormFile file)
+        public async Task<IActionResult> UploadFile(Guid projectId, List<IFormFile> files)
         {
-            if (file == null || file.Length == 0)
+            if (files == null || files.Count == 0)
             {
-                return BadRequest("No file uploaded.");
+                return BadRequest("No files uploaded.");
             }
 
-            // Generate a unique file name
-            var fileName = Path.GetFileName(file.FileName);
+            var uploadedFiles = new List<AttachFile>();
 
-            // Define the directory path including the projectId
-            var directoryPath = Path.Combine("wwwroot", "filePath", projectId.ToString());
 
-            // Ensure the directory exists
-            if (!Directory.Exists(directoryPath))
+            foreach (var file in files)
             {
-                Directory.CreateDirectory(directoryPath);
+                // Generate a unique file name
+                var fileName = Path.GetFileName(file.FileName);
+
+                // Define the directory path including the projectId
+                var directoryPath = Path.Combine("wwwroot", "filePath", projectId.ToString());
+
+                // Ensure the directory exists
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                // Combine the directory path with the file name
+                var filePath = Path.Combine(directoryPath, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // Create a new AttachFile entity
+                var attachFile = new AttachFile
+                {
+                    Id = Guid.NewGuid(),
+                    FileName = fileName,
+                    FilePath = $"/filePath/{projectId}/{fileName}", // Update the file path to include projectId
+                };
+
+                var projectAttachFile = new ProjectAttachFile
+                {
+                    ProjectId = projectId,
+                    attachFileId = attachFile.Id
+                };
+
+                await _context.AttachFiles.AddAsync(attachFile);
+                await _context.ProjectAttachFiles.AddAsync(projectAttachFile);
+                uploadedFiles.Add(attachFile);
             }
 
-            // Combine the directory path with the file name
-            var filePath = Path.Combine(directoryPath, fileName);
-
-            // Save the file to the server
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // Create a new AttachFile entity
-            var attachFile = new AttachFile
-            {
-                Id = Guid.NewGuid(),
-                ProjectId = projectId,
-                FileName = fileName,
-                FilePath = $"/filePath/{projectId}/{fileName}", // Update the file path to include projectId
-               
-            };
-
-            _context.AttachFiles.Add(attachFile);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(uploadedFiles);
+
 
         }
 
@@ -402,18 +417,55 @@ namespace ResourceManager.Controllers
         public async Task<IActionResult> GetProjectAttachments(Guid id)
         {
             // Fetch all attachments related to the project with the given ID
-            var attachments = await _context.AttachFiles
-                .Where(af => af.ProjectId == id)
-                .Select(af => new
-                {
-                    af.FileName,
-                    af.FilePath,
-                    // You can include additional properties here as needed
-                })
+            var attachments = await _context.ProjectAttachFiles
+                .Where(paf => paf.ProjectId == id)
+                .Join(
+                    _context.AttachFiles,
+                    paf => paf.attachFileId,
+                    af => af.Id,
+                    (paf, af) => new
+                    {
+                        af.FileName,
+                        af.FilePath,
+                        af.Id
+                    }
+                )
                 .ToListAsync();
 
             // Return the result as an HTTP 200 OK response
-            return Json(attachments);
+            return Ok(attachments);
+        }
+
+        [HttpDelete]
+        [Route("/Project/DeleteAttachFile/{attachId}")]
+        public async Task<IActionResult> DeleteAttachFile(Guid attachId)
+        {
+            var attachFile = await _context.AttachFiles.FindAsync(attachId);
+            if (attachFile == null)
+            {
+                return NotFound("Attachment not found.");
+            }
+
+            // Find the corresponding entry in ProjectAttachFile
+            var projectAttachFile = await _context.ProjectAttachFiles
+                .FirstOrDefaultAsync(paf => paf.attachFileId == attachId);
+            if (projectAttachFile != null)
+            {
+                _context.ProjectAttachFiles.Remove(projectAttachFile);
+            }
+
+            // Remove the file from the server (optional)
+            var filePath = Path.Combine("wwwroot", attachFile.FilePath.TrimStart('/'));
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            // Remove the attach file record from the database
+            _context.AttachFiles.Remove(attachFile);
+            await _context.SaveChangesAsync();
+
+            return Ok("Attachment deleted successfully.");
         }
         #endregion
     }

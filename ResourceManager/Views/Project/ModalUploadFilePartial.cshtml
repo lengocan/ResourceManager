@@ -6,14 +6,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              
-                <form asp-action="UploadFile" method="post" enctype="multipart/form-data">
+
+                <form id="uploadFileForm" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="projectId" value="@Model.ProjectId" />
                     <div class="form-group">
-                        <label for="file">Upload File</label>
-                        <input type="file" name="file" class="form-control" />
+                        <label for="file">Upload Files</label>
+                        <input type="file" name="files" class="form-control" multiple />
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3" onclick="addFile()">Upload</button>
+                    <button type="button" class="btn btn-primary mt-3" onclick="addFile()">Upload</button>
                 </form>
             </div>
         </div>

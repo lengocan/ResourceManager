@@ -6,7 +6,7 @@ namespace ResourceManager.Models.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public Guid ProjectId { get; set; }
+        
         public string FileName { get; set; }
         public string FilePath { get; set; }
         

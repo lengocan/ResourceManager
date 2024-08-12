@@ -15,7 +15,7 @@ $(document).ready(() => {
     
     renderPageProject(projectId);
     renderAssignInfo(projectId);
-    UpdateProjectDetail(projectId);
+    renderFileAttachment(projectId);
 });
 
 function UpdateProjectDetail() {
@@ -235,7 +235,7 @@ function deleleAssign(userId) {
     })
 }
 
-function UpdateProjectDetail(projectId) {
+function renderFileAttachment(projectId) {
     
     $('#listFile').empty()
 
@@ -248,13 +248,15 @@ function UpdateProjectDetail(projectId) {
             data.map((item, index) => {
                 $('#listFile').append(`
                 <tr>
-                    <td>${item.fileName}</td>
+                    <td>
+                        <a href="${item.filePath}" download="${item.fileName}">${item.fileName}</a>
+                    </td>
                     
-                    <td>${item.filePath}</td>
+                    
                     
                     <td class="text-center">
                 
-                        <button class="btn btn-danger" onclick="DeleteBanner('${item.id}')">Delete</button>                      
+                        <button class="btn btn-danger" onclick="deleleAttachfile('${item.id}')">Delete</button>                      
                     </td>
                     
                     </tr>`)
@@ -268,13 +270,15 @@ function UpdateProjectDetail(projectId) {
 
 function addFile() {
     var formData = new FormData($('#uploadFileForm')[0]);
-    var fileInput = $('input[name="file"]')[0].files[0];
+    var files = $('input[name="files"]')[0].files;
     var pathArray = window.location.pathname.split('/');
     var projectId = pathArray[pathArray.length - 1];
-    if (!fileInput) {
-        alert("Please select a file.");
+
+    if (files.length === 0) {
+        alert("Please select files.");
         return;
     }
+
 
     $.ajax({
         url: '/Project/UploadFile',
@@ -283,16 +287,34 @@ function addFile() {
         contentType: false,
         processData: false,
         success: function (data) {
+            /*UpdateProjectDetail(projectId)*/
             console.log(data)
             $('#ModalUploadFile').modal('hide');
-            UpdateProjectDetail(projectId);
+            toastr.success("Complete add attach file")
+            renderFileAttachment(projectId)
         },
         error: function (error) {
             console.log(error)
         }
     });
 }
-$('#uploadFileForm').submit(function (e) {
-    e.preventDefault(); // Prevent the default form submission
-    addFile();
-});
+function deleleAttachfile(fileId) {
+    var pathArray = window.location.pathname.split('/');
+    var projectId = pathArray[pathArray.length - 1];
+    $.ajax({
+        url: '/Project/DeleteAttachFile/' + fileId,
+        type: 'DELETE',
+
+        success: function (data) {
+            console.log("delte data", data)
+
+            toastr.success("Complete delete attach file")
+            
+            renderFileAttachment(projectId)
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}

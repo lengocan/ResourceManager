@@ -31,10 +31,7 @@ namespace ResourceManager.Controllers
             return View();
         }
 
-        public IActionResult Project()
-        {
-            return View();
-        }
+     
        
         public IActionResult Employee()
         {
