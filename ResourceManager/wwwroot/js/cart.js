@@ -8,92 +8,100 @@
 
 $(document).ready(() => {
     console.log("hello");
-    renderTableRoles();
+    renderCart()
     
 });
 
-function CreateUpdateRoles() {
-    var id = $('#idRoles').val();
-    var quyen = $('#roleName').val();
-    
-    
+function renderCart() {
+    $('#listProjectReceived').empty();
 
-    if (id === '') {
+    $.ajax({
+        url: "/Cart/getAllCart",
+        type: 'GET',
+        success: function (data) {
+            console.log(data)
+            data.map((item, index) => {
+                // Generate attachment links only if attachments exist
+                let attachments = item.attachments
+                    ? item.attachments.map(att =>
+                        `<a href="${att.filePath}" download="${att.fileName}">${att.fileName}</a>`
+                    ).join(', ')
+                    : '';
+
+                $('#listProjectReceived').append(`
+                <tr>
+                    <td>${index + 1}</td>
+                    <td class="align-middle text-center"><a href="/Project/DetailProject/${item.projectId}">${item.projectName}</a></td>
+                    <td>${item.userName}</td>
+                    
+                    <td>${item.dueDay}</td>
+                    <td>${item.timeSend}</td>
+                    <td>${attachments}</td> <!-- Attachments column -->
+                    <td class="text-center">
+                        <input type="checkbox" ${item.isAccept ? 'checked' : ''} onclick="toggleAccept('${item.id}', this)">
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-danger" onclick="deleteCart('${item.id}')">Delete</button>                      
+                    </td>
+                </tr>`);
+            });
+            /*data.map((item, index) => {
+                $('#listProjectReceived').append(`
+                <tr>
+                    <td>${index + 1}</td>
+                    
+                    <td>${item.projectName}</td>
+                    <td>${item.userName}</td>
+                    <td>${item.createDay}</td>
+                    <td>${item.dueDay}</td>
+                    <td>${item.timeSend}</td>
+                    
+                    
+                    <td class="text-center">
+                        <input type="checkbox" ${item.isAccept ? 'checked' : ''} onclick="toggleAccept('${item.id}', this)">
+                    </td>
+                   <td class="text-center">
+                        
+                        <button class="btn btn-danger" onclick="deleteCart('${item.id}')">Delete</button>                      
+                    </td>
+                    </tr>`)
+            })*/
+        }
+    })
+}
+function toggleAccept(id, checkbox) {
+    // Only proceed if the checkbox is being checked (not unchecked)
+        var isAccept = checkbox.checked;
         $.ajax({
-            url: '/Assignment/CreateRole',
-            type: 'POST',
+            url: '/Cart/ToggleAccept/' + id, // Adjust the URL if necessary
+            type: 'PUT',
             data: {
-                name: quyen              
+                id: id,
+                isAccept: isAccept}, // Send the ID as form data
+            success: function (response) {
+                toastr.success("Success accept Project");
             },
-            success: function (data) {
-                console.log("QUYEN DC TAO LA",data);
-                if (data) {
-                    toastr.success('Add success!');
-                    renderTableRoles();
-                    $('#modalCreateUpdateRoles').modal('hide');
-                }
+            error: function (xhr, status, error) {
+                console.error("An error occurred:", error);
+               
+            }
+        });
+    
+}
+function deleteCart(id) {
+    if (confirm('Are you sure you want to delete this item?')) {
+        $.ajax({
+            url: '/Cart/DeleteCart/' +id,
+            type: 'DELETE',
+            data: { id: id },
+            success: function (response) {
+                toastr.success("Success delete Cart");
+                renderCart(); 
             },
-            error: function (error) {
-                toastr.error('Quyền đã tồn tại');
-                $('#modalCreateUpdateRoles').modal('hide');
+            error: function (xhr, status, error) {
+                console.error("An error occurred:", error);
+               
             }
         });
     }
-}
-
-function renderTableRoles() {
-    $('#listrole').empty();
-    $.ajax({
-        url: '/Assignment/GetAllRoles',
-        type: 'GET',
-        success: function (data) {
-            console.log("Danh sach du lieu: ", data);
-            if (data.length > 0) {
-                data.forEach((item, index) => {
-                    var parentName = data.filter(x => x.categoryId === item.parentId)[0].categoryName;
-                    $('#listrole').append(`
-								<tr>
-									<td class="text-center"><input type="checkbox"/></td>
-                                    <td>${item.name}</td>                                  
-									<td>Loading...</td>
-									<td>Loading...</td>
-									<td>Loading...</td>
-									<td class="text-center">
-										<button type="button" class="btn btn-primary" onclick="EditRole('${item.id}')">Sửa</button>
-										<button type="button" class="btn btn-danger" onclick="DeleteRole('${item.id}')">Xóa</button>
-									</td>
-								</tr>
-							`);
-                });
-            }
-            else {
-                $('#listrole').append(`
-							<tr>
-								<td class="text-center" colspan="5">Không có dữ liệu</td>
-							</tr>
-						`);
-            }
-            
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-function DeleteRole(id) {
-    $.ajax({
-        url: '/Assignment/DeleteRole/' + id,
-        type: 'DELETE',
-        success: function (data) {
-            if (data) {
-                renderTableRoles();
-            }
-            else {
-                alert('Xóa sản phẩm thất bại');
-            }
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
 }

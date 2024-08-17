@@ -121,6 +121,9 @@ namespace ResourceManager.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("isAccept")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("projectId")
                         .HasColumnType("uniqueidentifier");
 

@@ -318,3 +318,20 @@ function deleleAttachfile(fileId) {
         }
     })
 }
+
+function sendProject() {
+    var pathArray = window.location.pathname.split('/');
+    var projectId = pathArray[pathArray.length - 1];
+
+    $.ajax({
+        url: "/Cart/addCart/",
+        type: "POST",
+        data: {
+            projectId: projectId
+        },
+        success: function (data) {
+            console.log(data);
+            toastr.success("Complete send project")
+        }
+    })
+}

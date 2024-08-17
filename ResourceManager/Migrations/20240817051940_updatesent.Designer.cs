@@ -12,8 +12,8 @@ using ResourceManager.Models.Entities;
 namespace ResourceManager.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240812123702_AttachFileUpdate")]
-    partial class AttachFileUpdate
+    [Migration("20240817051940_updatesent")]
+    partial class updatesent
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,6 +113,29 @@ namespace ResourceManager.Migrations
                     b.HasKey("ProjectId", "attachFileId");
 
                     b.ToTable("ProjectAttachFiles");
+                });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.SendProject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("isAccept")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("projectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("timeSend")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SendProjects");
                 });
 
             modelBuilder.Entity("ResourceManager.Models.Entities.TodoList", b =>
