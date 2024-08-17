@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ResourceManager.Areas.Identity.Data;
 using ResourceManager.Data;
+using System.Security.Claims;
 
 namespace ResourceManager.Controllers
 {
@@ -122,8 +123,31 @@ namespace ResourceManager.Controllers
             var permissions = await query.ToListAsync();
             return Ok(permissions);
         }
-        
-        
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserRole()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+            {
+                return Unauthorized();
+            }
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles == null || roles.Count == 0)
+            {
+                return NotFound("No roles found for the user.");
+            }
+
+            return Ok(new { Roles = roles });
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreatePermission(string userId, string roleId)
         {

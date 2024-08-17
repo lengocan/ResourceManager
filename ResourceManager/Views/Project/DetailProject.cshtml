@@ -1,9 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Project";
+    var projectName = ViewData["ProjectName"] as string;
+    ViewData["Title"] = projectName;
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var projectId = ViewData["ProjectId"];
 }
-
+@section Title {
+    <title>@projectName</title>
+}
 
     <style>
 

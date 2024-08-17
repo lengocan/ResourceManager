@@ -8,12 +8,14 @@
 
 
 $(document).ready(() => {
-    console.log("hello");
-    
+   
+    renderNotice();
+    renderUserName();
+    renderRole();
 });
 
 $('#infoUser').on('shown.bs.modal', function () {
-    console.log("open");
+    
     fillInfo();
 })
 
@@ -40,7 +42,7 @@ $('#saveInfo').on('click', function () {
             phoneNumber: phone
         },
         success: function (data) {
-            console.log(data)
+            
             $('#infoUser').modal('hide');
             toast.success("Update thanh cong")
         },
@@ -55,7 +57,7 @@ function fillInfo() {
         url: '/Account/GetCurrentAccount',
         type: 'GET',
         success: function (data) {
-            console.log("danh sach du lieu", data);
+            
             $('.modalfullname').val(data.fullName);
             $('.modalemail').val(data.email);
             $('.modalnumber').val(data.phoneNumber);
@@ -66,5 +68,56 @@ function fillInfo() {
             $('.modalteam').val(data.team);
         }
 
+    })
+}
+
+function renderNotice() {
+    $.ajax({
+        url: "/Notice/GetNotices",
+        type: "GET",
+        success: function (data) {
+            console.log("notice",data)
+            var dropdown = $('#notificationDropdown');
+            dropdown.empty();
+
+            if (data.length === 0) {
+                dropdown.append('<a href="#" class="dropdown-item text-center">No new notifications</a>');
+            } else {
+                data.forEach(function (notice) {
+                    var noticeItem = `
+                        <a href="#" class="dropdown-item" style="color: #333; background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+                            <h6 class="fw-normal mb-0" style="font-size: 14px; font-weight: 500; color: #007bff;">${notice.content}</h6>
+                            <small style="font-size: 12px; color: #6c757d;">Sent by ${notice.userSentName} at ${notice.timeCreate}</small>
+                        </a>
+                    `;
+                    dropdown.append(noticeItem);
+                });
+                dropdown.append('<a href="#" class="dropdown-item text-center">See all notifications</a>');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching notifications:', error);
+        }
+    });
+}
+function renderUserName() {
+    $.ajax({
+        url: '/Account/GetCurrentAccount',
+        type: 'GET',
+        success: function (data) {
+            console.log("userinfo",data)
+            $('#userNameInterfaceLeft').text(data.fullName);
+            $('#userNameInterfaceRight').text(data.fullName);
+        }
+    })
+}
+function renderRole() {
+    $.ajax({
+        url: '/Assignment/GetUserRole',
+        type: 'GET',
+        success: function (data) {
+            console.log("userrole", data)
+            $('#userRoles').text(data.roles);
+        }
     })
 }

@@ -57,7 +57,32 @@ namespace ResourceManager.Controllers
             };
             _context.SendProjects.Add(cart);
             await _context.SaveChangesAsync();
+
+
+            var dmUser = await _userManager.Users
+            .Where(u => _userManager.UserRoles
+                .Any(ur => ur.UserId == u.Id && _userManager.Roles.Any(r => r.Id == ur.RoleId && r.Name == "DM")))
+            .FirstOrDefaultAsync();
+
+            if (dmUser != null)
+            {
+                var notice = new Notice
+                {
+                    Id = Guid.NewGuid(),
+                    UserIdReceivedDM = Guid.Parse(dmUser.Id),  // Use the DM user's ID
+                    UserIdSent = userId,  // Use the DM user's ID
+                    projectId = projectId,
+                    Content = "A project has been added to the cart.",
+
+                    TimeCreate = timeStamp
+                };
+
+                _context.Notices.Add(notice);
+                await _context.SaveChangesAsync();
+            }
             return Ok(cart);
+
+
         }
         [HttpGet]
         public async Task<IActionResult> getAllCart()

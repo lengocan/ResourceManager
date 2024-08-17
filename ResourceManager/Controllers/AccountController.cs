@@ -20,16 +20,18 @@ namespace ResourceManager.Controllers
         private readonly UserIdentityContext _identityContext;
         private readonly UserManager<UserEmployee> _userManager;
         private readonly IUserStore<UserEmployee> _userStore;
+        private readonly SignInManager<UserEmployee> _signInManager;
 
 
         public AccountController(UserIdentityContext identityContext,
-            UserManager<UserEmployee> userManager, IUserStore<UserEmployee> userStore)
+            UserManager<UserEmployee> userManager, IUserStore<UserEmployee> userStore, SignInManager<UserEmployee> signInManager)
         {
 
             _identityContext = identityContext;
 
             _userStore = userStore;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -138,6 +140,27 @@ namespace ResourceManager.Controllers
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(UserEmployee)}'. " +
                     $"Ensure that '{nameof(UserEmployee)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            // Optionally, you can redirect to a specific URL or the home page
+            return RedirectToLocal(returnUrl);
+        }
+
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
         }
     }

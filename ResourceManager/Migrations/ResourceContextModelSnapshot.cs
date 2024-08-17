@@ -41,6 +41,32 @@ namespace ResourceManager.Migrations
                     b.ToTable("AttachFiles");
                 });
 
+            modelBuilder.Entity("ResourceManager.Models.Entities.Notice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeCreate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserIdReceivedDM")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserIdSent")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("projectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notices");
+                });
+
             modelBuilder.Entity("ResourceManager.Models.Entities.Project", b =>
                 {
                     b.Property<Guid>("ProjectId")

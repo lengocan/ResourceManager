@@ -6,12 +6,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ResourceManager.Migrations
 {
     /// <inheritdoc />
-    public partial class updatesent : Migration
+    public partial class addNotice1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           
+            
+            migrationBuilder.CreateTable(
+                name: "Notices",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserIdReceivedDM = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserIdSent = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    projectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeCreate = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notices", x => x.Id);
+                });
+
+
             migrationBuilder.CreateTable(
                 name: "SendProjects",
                 columns: table => new
@@ -35,9 +52,13 @@ namespace ResourceManager.Migrations
         {
            
             migrationBuilder.DropTable(
+                name: "Notices");
+
+           
+
+            migrationBuilder.DropTable(
                 name: "SendProjects");
 
-            
         }
     }
 }

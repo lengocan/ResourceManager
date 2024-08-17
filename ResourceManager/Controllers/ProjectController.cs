@@ -182,7 +182,8 @@ namespace ResourceManager.Controllers
             {
                 return NotFound(); // Return a 404 if the project is not found
             }
-            ViewData["ProjectId"] = id;
+            ViewData["ProjectName"] = id;
+            ViewData["ProjectName"] = item.projectName;
             return View(item);
         }
 

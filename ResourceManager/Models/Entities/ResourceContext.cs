@@ -5,6 +5,7 @@ namespace ResourceManager.Models.Entities
     public class ResourceContext: DbContext
     {     
         public DbSet<TodoList> TodoList { get; set; }
+        public DbSet<Notice> Notices { get; set; }
         public DbSet<AttachFile> AttachFiles { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectAttachFile> ProjectAttachFiles { get; set; }

@@ -12,8 +12,8 @@ using ResourceManager.Models.Entities;
 namespace ResourceManager.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240817051940_updatesent")]
-    partial class updatesent
+    [Migration("20240817205556_addNotice1")]
+    partial class addNotice1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,32 @@ namespace ResourceManager.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AttachFiles");
+                });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.Notice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeCreate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserIdReceivedDM")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserIdSent")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("projectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notices");
                 });
 
             modelBuilder.Entity("ResourceManager.Models.Entities.Project", b =>
