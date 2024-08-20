@@ -56,50 +56,61 @@ function createProject() {
 }
 function renderTableProject() {
     $('#listproject').empty();
-    
+
     $.ajax({
         url: '/Project/getAllProject',
         type: 'GET',
         success: function (data) {
             console.log("Danh sach du lieu: ", data);
-            if (data.length > 0) {
-                data.forEach((item, index) => {
-                    
-                    $('#listproject').append(`
-								<tr>									
-                                    <td class="align-middle text-center">${item.projectNumber}</td>    
-                                    <td class="align-middle text-center"><a href="/Project/DetailProject/${item.projectId}">${item.projectName}</a></td>
-									
-									
-									<td class="align-middle text-center">${item.branch == "1" ? "TPHCM" : item.branch == "2" ? "Ha Noi" : "Da Nang"}</td>
-                                     <td class="align-middle text-center ${item.status == "1" ? "text-primary" : item.status == "2" ? "text-warning" : "text-success"}">${item.status == "1" ? "Queue" : item.status == "2" ? "In Process" : "Complete"}</td>
-									
-                                     <td class="align-middle text-center ${item.priority == "1" ? "text-primary" : "text-danger"}">${item.priority == "1" ? "Regular" : "High"}</td>
-									<td class="align-middle text-center">${item.createDay}</td>
-									<td class="align-middle text-center">${item.dueDay}</td>
-									<td class="align-middle text-center">${item.turntime}</td>
-									<td class="text-center">
-										<button type="button" class="btn btn-primary" onclick="EditProject('${item.projectId}')">Edit</button>
-										<button type="button" class="btn btn-danger" onclick="DeleteProject('${item.projectId}')">Delete</button>
-									</td>
-								</tr>
-							`);
-                });
-            }
-            else {
-                $('#listproject').append(`
-							<tr>
-								<td class="text-center" colspan="8">No data</td>
-							</tr>
-						`);
-            }
 
+            const branch = $('#branchSelect').val();
+            const status = $('#statusSelect').val();
+            const priority = $('#prioritySelect').val();
+
+            // Filter data based on dropdown selections
+            let filteredData = data.filter(item =>
+                (branch == '0' || item.branch == branch) &&
+                (status == '0' || item.status == status) &&
+                (priority == '0' || item.priority == priority)
+            );
+
+            if (filteredData.length > 0) {
+                filteredData.map((item, index) => {
+
+                    $('#listproject').append(`
+                        <tr>                                    
+                            <td class="align-middle text-center">${item.projectNumber}</td>    
+                            <td class="align-middle text-center"><a href="/Project/DetailProject/${item.projectId}">${item.projectName}</a></td>
+                            
+                            <td class="align-middle text-center">${item.branch == "1" ? "TPHCM" : item.branch == "2" ? "Ha Noi" : "Da Nang"}</td>
+                            <td class="align-middle text-center ${item.status == "1" ? "text-primary" : item.status == "2" ? "text-warning" : "text-success"}">${item.status == "1" ? "Queue" : item.status == "2" ? "In Process" : "Complete"}</td>
+                            <td class="align-middle text-center ${item.priority == "1" ? "text-primary" : "text-danger"}">${item.priority == "1" ? "Regular" : "High"}</td>
+                            <td class="align-middle text-center">${item.createDay}</td>
+                            <td class="align-middle text-center">${item.dueDay}</td>
+                            <td class="align-middle text-center">${item.turntime}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger" onclick="DeleteProject('${item.projectId}')">Delete</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            } else {
+                $('#listproject').append(`
+                    <tr>
+                        <td class="text-center" colspan="9">No data</td>
+                    </tr>
+                `);
+            }
         },
         error: function (error) {
             console.log(error);
         }
     });
 }
+
+$('#branchSelect, #statusSelect, #prioritySelect').on('change', function () {
+    renderTableProject();
+});
 
 function DeleteProject(id) {
     console.log(id)

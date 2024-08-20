@@ -25,7 +25,7 @@ namespace ResourceManager.Controllers
         {
             return View();
         }
-        [Authorize]
+        [Authorize(Roles = "DM")]
         public IActionResult Admin()
         {
             return View();

@@ -10,29 +10,52 @@ $(document).ready(function () {
 
 function loadTable() {
     $('#listEmployee').empty();
-    
+
     $.ajax({
         url: "/Account/GetAllEmployee",
         type: 'GET',
         success: function (data) {
-            console.log(data)
-            data.map((item, index) => {
+            console.log(data);
+
+            const selectedTeam = $('#teamSelect').val();
+
+            // Filter data based on selected team
+            let filteredData = data.filter(item =>
+                selectedTeam == '0' || item.team == selectedTeam
+            );
+
+            if (filteredData.length > 0) {
+                filteredData.map((item, index) => {
+                    $('#listEmployee').append(`
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${item.email}</td>
+                            <td>${item.fullName}</td>
+                            <td>${item.phoneNumber}</td>
+                            <td class="align-middle text-center">${item.team == "1" ? "TPHCM" : item.team == "2" ? "Ha Noi" : "Da Nang"}</td>
+                            <td class="text-center">
+                                <button class="btn btn-primary" onclick="EditTask(${item.id})">Edit</button>
+                                <button class="btn btn-danger" onclick="DeleteTask(${item.id})">Delete</button>                      
+                            </td>
+                        </tr>`);
+                });
+            } else {
                 $('#listEmployee').append(`
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${item.email}</td>
-                    <td >${item.fullName}</td>
-                    <td>${item.phoneNumber}</td>
-                    <td>${item.isActive}</td>
-                    <td class="text-center">
-                        <button class="btn btn-primary" onclick="EditTask(${item.id})">Edit</button>
-                        <button class="btn btn-danger" onclick="DeleteTask(${item.id})">Delete</button>                      
-                    </td>
-                    </tr>`)
-            })
+                    <tr>
+                        <td colspan="6" class="text-center">No data</td>
+                    </tr>`);
+            }
+        },
+        error: function (error) {
+            console.log(error);
         }
-    })
+    });
 }
+
+
+$('#teamSelect').on('change', function () {
+    loadTable();
+});
 $('#btnAddInfo').on('click', function () {
 
     var fullName = $('.addmodalfullname').val();

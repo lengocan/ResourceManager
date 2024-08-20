@@ -55,9 +55,7 @@ function renderTableRoles() {
 								<tr>
 									<td class="text-center"><input type="checkbox"/></td>
                                     <td>${item.name}</td>                                  
-									<td>Loading...</td>
-									<td>Loading...</td>
-									<td>Loading...</td>
+									
 									<td class="text-center">
 										<button type="button" class="btn btn-primary" onclick="EditRole('${item.id}')">Sửa</button>
 										<button type="button" class="btn btn-danger" onclick="DeleteRole('${item.id}')">Xóa</button>

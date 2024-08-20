@@ -11,11 +11,7 @@
     <div class="mb-3 p-3 mt-3">
         <a href="#" class="btn btn-primary shadow rounded">Delete</a>
     </div>
-    <div class="mb-3 p-3 mt-3">
-        <a asp-area="" asp-controller="Project" asp-action="DetailProject" class="nav-item nav-link">
-            <i class="fa fa-keyboard me-2" id="Project"></i>Project
-        </a>
-    </div>
+   
     
 </div>
 
@@ -23,23 +19,43 @@
 <div class="d-flex justify-content-between gap-4">
     <article class="d-grid flex-grow-1">
         @* list item *@
-        <div class="bg-white px-3 py-2 shadow rounded">
+        <div class="bg-white px-4 py-3 shadow rounded">
             
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover w-100">
                 <thead>
                     <tr class="text-center">
                         <th>Project Number</th>
                         <th>Project Name</th>
-                        <th>Branch</th>
-                        <th>Status</th>
-                        <th>Priority</th>
+                        <td>
+                            <select class="form-select" id="branchSelect">
+                                <option value="0">Branch</option>
+                                <option value="1">TPHCM</option>
+                                <option value="2">Ha Noi</option>
+                                <option value="3">Da Nang</option>
+                               
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" id="statusSelect">
+                                <option value="0">Status</option>
+                                <option value="1">Queue</option>
+                                <option value="2">In Progress</option>
+                                <option value="3">Complete</option>
+                               
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" id="prioritySelect">
+                                <option value="0">Priority</option>
+                                <option value="1">Regular</option>
+                                <option value="2">High</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                        </td>
                         <th>Create Day</th>
                         <th>Due Day</th>
                         <th>Turn time</th>
-                        @* <th class="w-px-50">
-                            Discount
-                            <input type="checkbox" id="allCheckbox" class="form-check-input" />
-                        </th> *@
+                       
                         
                         
                         <th class="w-px-100 align-middle">Event</th>
