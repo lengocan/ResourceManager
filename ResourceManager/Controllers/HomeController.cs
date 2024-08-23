@@ -31,8 +31,8 @@ namespace ResourceManager.Controllers
             return View();
         }
 
-     
-       
+
+        [Authorize(Roles = "DM")]
         public IActionResult Employee()
         {
             return View();
