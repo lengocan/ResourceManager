@@ -82,8 +82,7 @@
                         <figcaption class="blockquote-footer fw-bold fs-5 mt-1 mb-1">
                         Admin <cite title="Admin"></cite>
                         </figcaption>
-                        <a asp-area="" asp-controller="Home" asp-action="Admin" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Admin" ? "active" : "")">
-                        <i class="fa fa-th me-2" id="dashboard"></i>Dashboard</a>
+                        
                         <a asp-area="" asp-controller="Home" asp-action="Employee" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Employee" ? "active" : "")">
                         <i class="fa fa-keyboard me-2" id="EmployeeMng"></i>Employee</a>
                         <a asp-area="" asp-controller="Assignment" asp-action="Role" class="nav-item nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Role" ? "active" : "")">

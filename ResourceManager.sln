@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManager", "ResourceManager\ResourceManager.csproj", "{B5E0EC02-5150-4408-8070-D2313CEA1FE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceManager", "ResourceManager\ResourceManager.csproj", "{B5E0EC02-5150-4408-8070-D2313CEA1FE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API file", "API file", "{4A790C1B-9A7E-4F51-9B86-AE4D6B83A1E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RMAPI", "..\RMAPI\RMAPI\RMAPI.csproj", "{0FAB01AC-0FC8-4097-BDE3-D625DF22A603}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{B5E0EC02-5150-4408-8070-D2313CEA1FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5E0EC02-5150-4408-8070-D2313CEA1FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5E0EC02-5150-4408-8070-D2313CEA1FE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FAB01AC-0FC8-4097-BDE3-D625DF22A603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FAB01AC-0FC8-4097-BDE3-D625DF22A603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FAB01AC-0FC8-4097-BDE3-D625DF22A603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FAB01AC-0FC8-4097-BDE3-D625DF22A603}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0FAB01AC-0FC8-4097-BDE3-D625DF22A603} = {4A790C1B-9A7E-4F51-9B86-AE4D6B83A1E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1705BBD9-8C84-4FB4-A06A-67DD736F5E8D}
