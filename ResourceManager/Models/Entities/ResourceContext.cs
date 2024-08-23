@@ -11,6 +11,7 @@ namespace ResourceManager.Models.Entities
         public DbSet<ProjectAttachFile> ProjectAttachFiles { get; set; }
         public DbSet<ProjectAssign> ProjectAssigns { get; set; }
         public DbSet<SendProject> SendProjects { get; set; }
+        public DbSet<NoticeCompleteFromUser> NoticeCompleteFromUsers { get; set; }
         public ResourceContext()
         {
         }

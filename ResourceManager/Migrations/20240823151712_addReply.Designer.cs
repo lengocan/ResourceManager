@@ -12,8 +12,8 @@ using ResourceManager.Models.Entities;
 namespace ResourceManager.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20240817205556_addNotice1")]
-    partial class addNotice1
+    [Migration("20240823151712_addReply")]
+    partial class addReply
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,32 @@ namespace ResourceManager.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Notices");
+                });
+
+            modelBuilder.Entity("ResourceManager.Models.Entities.NoticeCompleteFromUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeCreate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserIdReceived")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserIdSentDM")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("projectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NoticeCompleteFromUsers");
                 });
 
             modelBuilder.Entity("ResourceManager.Models.Entities.Project", b =>

@@ -6,12 +6,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ResourceManager.Migrations
 {
     /// <inheritdoc />
-    public partial class addNotice1 : Migration
+    public partial class addReply : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            
+          
+
+            migrationBuilder.CreateTable(
+                name: "NoticeCompleteFromUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserIdReceived = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserIdSentDM = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    projectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeCreate = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NoticeCompleteFromUsers", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Notices",
                 columns: table => new
@@ -28,36 +45,19 @@ namespace ResourceManager.Migrations
                     table.PrimaryKey("PK_Notices", x => x.Id);
                 });
 
-
-            migrationBuilder.CreateTable(
-                name: "SendProjects",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    projectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    timeSend = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    isAccept = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SendProjects", x => x.Id);
-                });
-
-           
+          
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
            
+
+            migrationBuilder.DropTable(
+                name: "NoticeCompleteFromUsers");
+
             migrationBuilder.DropTable(
                 name: "Notices");
-
-           
-
-            migrationBuilder.DropTable(
-                name: "SendProjects");
 
         }
     }

@@ -19,7 +19,7 @@ function renderCart() {
         url: "/Cart/getAllCart",
         type: 'GET',
         success: function (data) {
-            console.log(data)
+            console.log("project data",data)
             data.map((item, index) => {
                 // Generate attachment links only if attachments exist
                 let attachments = item.attachments
@@ -45,44 +45,27 @@ function renderCart() {
                     </td>
                 </tr>`);
             });
-            /*data.map((item, index) => {
-                $('#listProjectReceived').append(`
-                <tr>
-                    <td>${index + 1}</td>
-                    
-                    <td>${item.projectName}</td>
-                    <td>${item.userName}</td>
-                    <td>${item.createDay}</td>
-                    <td>${item.dueDay}</td>
-                    <td>${item.timeSend}</td>
-                    
-                    
-                    <td class="text-center">
-                        <input type="checkbox" ${item.isAccept ? 'checked' : ''} onclick="toggleAccept('${item.id}', this)">
-                    </td>
-                   <td class="text-center">
-                        
-                        <button class="btn btn-danger" onclick="deleteCart('${item.id}')">Delete</button>                      
-                    </td>
-                    </tr>`)
-            })*/
+            
         }
     })
 }
 function toggleAccept(id, checkbox) {
-    // Only proceed if the checkbox is being checked (not unchecked)
+   
         var isAccept = checkbox.checked;
         $.ajax({
-            url: '/Cart/ToggleAccept/' + id, // Adjust the URL if necessary
+            url: '/Notice/ToggleAccept/' + id,
             type: 'PUT',
+             // Specify JSON content type
             data: {
                 id: id,
-                isAccept: isAccept}, // Send the ID as form data
+                isAccept: isAccept
+            },
+            
             success: function (response) {
                 toastr.success("Success accept Project");
             },
             error: function (xhr, status, error) {
-                console.error("An error occurred:", error);
+                console.log("An error occurred:", error);
                
             }
         });

@@ -180,7 +180,7 @@ namespace ResourceManager.Controllers
             var item = _context.Projects.FirstOrDefault(x => x.ProjectId == id);
             if (item == null)
             {
-                return NotFound(); // Return a 404 if the project is not found
+                return NotFound(); 
             }
             ViewData["ProjectName"] = id;
             ViewData["ProjectName"] = item.projectName;
@@ -218,7 +218,7 @@ namespace ResourceManager.Controllers
                 return BadRequest("User not found");
             }
 
-            // Find the project by ID (assuming you have a method to do so)
+            
             var project = await _context.Projects.FindAsync(Guid.Parse(projectId));
             if (project == null)
             {
@@ -232,7 +232,7 @@ namespace ResourceManager.Controllers
                 UserEmployeeId = Guid.Parse(userId)
             };
 
-            // Add the assignment to the context
+            
             _context.ProjectAssigns.Add(projectAssign);
             var result = await _context.SaveChangesAsync();
 
@@ -258,21 +258,21 @@ namespace ResourceManager.Controllers
                     return BadRequest("User not found");
                 }
 
-                // Find the project by ID (assuming you have a method to do so)
+               
                 var project = await _context.Projects.FindAsync(Guid.Parse(projectId));
                 if (project == null)
                 {
                     return BadRequest("Project not found");
                 }
 
-                // Create the project assignment
+                
                 var projectAssign = new ProjectAssign
                 {
                     ProjectId = Guid.Parse(projectId),
                     UserEmployeeId = Guid.Parse(userid)
                 };
 
-                // Add the assignment to the context
+                
                 _context.ProjectAssigns.Add(projectAssign);
 
 
@@ -366,19 +366,19 @@ namespace ResourceManager.Controllers
 
             foreach (var file in files)
             {
-                // Generate a unique file name
+                
                 var fileName = Path.GetFileName(file.FileName);
 
-                // Define the directory path including the projectId
+                
                 var directoryPath = Path.Combine("wwwroot", "filePath", projectId.ToString());
 
-                // Ensure the directory exists
+                // check the directory 
                 if (!Directory.Exists(directoryPath))
                 {
                     Directory.CreateDirectory(directoryPath);
                 }
 
-                // Combine the directory path with the file name
+                // Combine 
                 var filePath = Path.Combine(directoryPath, fileName);
 
                 // Save the file to the server
@@ -392,7 +392,7 @@ namespace ResourceManager.Controllers
                 {
                     Id = Guid.NewGuid(),
                     FileName = fileName,
-                    FilePath = $"/filePath/{projectId}/{fileName}", // Update the file path to include projectId
+                    FilePath = $"/filePath/{projectId}/{fileName}",
                 };
 
                 var projectAttachFile = new ProjectAttachFile
@@ -417,7 +417,7 @@ namespace ResourceManager.Controllers
         [Route("/Project/GetProjectAttachments/{id}")]
         public async Task<IActionResult> GetProjectAttachments(Guid id)
         {
-            // Fetch all attachments related to the project with the given ID
+            
             var attachments = await _context.ProjectAttachFiles
                 .Where(paf => paf.ProjectId == id)
                 .Join(
@@ -433,7 +433,7 @@ namespace ResourceManager.Controllers
                 )
                 .ToListAsync();
 
-            // Return the result as an HTTP 200 OK response
+            
             return Ok(attachments);
         }
 

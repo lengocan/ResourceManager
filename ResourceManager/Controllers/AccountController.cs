@@ -163,5 +163,25 @@ namespace ResourceManager.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetUserRole()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+            {
+                return BadRequest("Invalid user ID");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
+
+            return Ok(new { role });
+        }
     }
 }

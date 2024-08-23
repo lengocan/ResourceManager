@@ -14,10 +14,10 @@ function renderChartProject() {
             console.log("Danh sach du lieu: ", data);
             if (data.length > 0) {
                 data.forEach((item, index) => {
-                    branchData[item.branch]++; // Counting projects per branch
+                    branchData[item.branch]++; 
                 });
 
-                // Call drawChart with the updated branch data
+                
                 drawChart(branchData);
             }
         },
@@ -41,13 +41,13 @@ function drawChart(branchData) {
             title: 'Projects by Branch',
             is3D: true,
             titleTextStyle: {
-                color: '#1a73e8', // Change this to your desired color
-                fontSize: 18,     // You can also change the font size if needed
-                bold: true        // You can make the title bold
+                color: '#1a73e8', 
+                fontSize: 18,     
+                bold: true        
             },
             pieSliceText: 'value',
 
-            slices: { 0: { offset: 0.1 }, 2: { offset: 0.1 } }, // Highlighting specific slices
+            slices: { 0: { offset: 0.1 }, 2: { offset: 0.1 } }, 
             tooltip: { textStyle: { fontSize: 12 } },
             animation: {
                 startup: true,
@@ -96,9 +96,9 @@ function drawChartEmployee(addressData) {
             title: 'Employee Distribution by Address',
             is3D: true,
             titleTextStyle: {
-                color: '#1a73e8', // Change this to your desired color
-                fontSize: 18,     // You can also change the font size if needed
-                bold: true        // You can make the title bold
+                color: '#1a73e8', 
+                fontSize: 18,     
+                bold: true        
             },
             pieSliceText: 'value',
             slices: { 0: { offset: 0.1 }, 2: { offset: 0.1 } },
@@ -159,9 +159,9 @@ function drawLineChart(projectTurntimes) {
         var options = {
             title: 'Project Turntime (in days)',
             titleTextStyle: {
-                color: '#1a73e8', // Change this to your desired color
-                fontSize: 18,     // You can also change the font size if needed
-                bold: true        // You can make the title bold
+                color: '#1a73e8', 
+                fontSize: 18,     
+                bold: true        
             },
             hAxis: { title: 'Project' },
             vAxis: { title: 'Turntime (days)' },
@@ -174,11 +174,11 @@ function drawLineChart(projectTurntimes) {
                 easing: 'out'
             },
             series: {
-                0: { color: '#e2431e' } // Customize color of the line
+                0: { color: '#e2431e' } 
             },
-            pointSize: 5, // Add points on the line
-            lineWidth: 2, // Set line width
-            focusTarget: 'category', // Highlight on hover
+            pointSize: 5, 
+            lineWidth: 2, 
+            focusTarget: 'category', 
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('linechart'));

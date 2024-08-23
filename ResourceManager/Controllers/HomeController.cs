@@ -40,25 +40,7 @@ namespace ResourceManager.Controllers
 
         
         
-        /*[Route("Team")]
-        public IActionResult Team()
-        {
-            return View();
-        }
-        [Route("Event")]
-        public IActionResult Event()
-        {
-            return View();
-        }
-        [Route("Meeting")]
-        public IActionResult Meeting()
-        {
-            return View();
-        }
-        [Route("Cart")]
-        public IActionResult Cart()
-        {
-            return View();*/
+       
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

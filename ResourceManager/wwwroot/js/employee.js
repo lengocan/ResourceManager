@@ -19,7 +19,7 @@ function loadTable() {
 
             const selectedTeam = $('#teamSelect').val();
 
-            // Filter data based on selected team
+            
             let filteredData = data.filter(item =>
                 selectedTeam == '0' || item.team == selectedTeam
             );

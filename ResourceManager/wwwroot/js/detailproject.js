@@ -93,7 +93,7 @@ $('#ModalEditProjectPartial').on('show.bs.modal', function () {
     var pathArray = window.location.pathname.split('/');
     var projectId = pathArray[pathArray.length - 1];
    // console.log(projectId)
-    // Call the function to load the project data
+    
     renderEditProject(projectId)
 });
 
@@ -131,7 +131,7 @@ function renderEditProject(projectId) {
 ///Assign project to user
 
 $('#ModalAssignProjectPartial').on('show.bs.modal', function () {
-    // Get the button that triggered the modal
+    
 
     renderSelectAccountAssign()
 });
@@ -332,6 +332,9 @@ function sendProject() {
         success: function (data) {
             console.log(data);
             toastr.success("Complete send project")
+        },
+        error: function (error) {
+            toastr.error("Cannot send project")
         }
     })
 }

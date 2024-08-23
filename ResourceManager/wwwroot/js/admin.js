@@ -8,10 +8,29 @@
 
 
 $(document).ready(() => {
-   
-    renderNotice();
-    renderUserName();
-    renderRole();
+    $.ajax({
+        url: "/Account/GetUserRole",
+        type: "GET",
+        success: function (data) {
+            
+            if (data.role == "DM") {
+                renderNoticeDM();
+                renderUserName();
+                renderRole();
+            } else {
+                renderNoticeForUser();
+                renderUserName();
+                renderRole();
+            }
+            
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching user role:', error);
+        }
+    });
+
+
+    
 });
 
 $('#infoUser').on('shown.bs.modal', function () {
@@ -71,12 +90,12 @@ function fillInfo() {
     })
 }
 
-function renderNotice() {
+function renderNoticeDM() {
     $.ajax({
-        url: "/Notice/GetNotices",
+        url: "/Notice/GetNoticesDM",
         type: "GET",
         success: function (data) {
-            console.log("notice",data)
+            console.log("notice admin",data)
             var dropdown = $('#notificationDropdown');
             dropdown.empty();
 
@@ -88,6 +107,35 @@ function renderNotice() {
                         <a href="#" class="dropdown-item" style="color: #333; background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
                             <h6 class="fw-normal mb-0" style="font-size: 14px; font-weight: 500; color: #007bff;">${notice.content}</h6>
                             <small style="font-size: 12px; color: #6c757d;">Sent by ${notice.userSentName} at ${notice.timeCreate}</small>
+                        </a>
+                    `;
+                    dropdown.append(noticeItem);
+                });
+                dropdown.append('<a href="#" class="dropdown-item text-center">See all notifications</a>');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching notifications:', error);
+        }
+    });
+}
+function renderNoticeForUser() {
+    $.ajax({
+        url: "/Notice/GetUserNotices",  // Ensure the URL matches your controller route
+        type: "GET",
+        success: function (data) {
+            console.log("notice user", data);
+            var dropdown = $('#notificationDropdown');
+            dropdown.empty();
+
+            if (data.length === 0) {
+                dropdown.append('<a href="#" class="dropdown-item text-center">No new notifications</a>');
+            } else {
+                data.forEach(function (notice) {
+                    var noticeItem = `
+                        <a href="#" class="dropdown-item" style="color: #333; background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+                            <h6 class="fw-normal mb-0" style="font-size: 14px; font-weight: 500; color: #007bff;">${notice.content}</h6>
+                            <small style="font-size: 12px; color: #6c757d;">Received at ${notice.timeCreate}</small>
                         </a>
                     `;
                     dropdown.append(noticeItem);
