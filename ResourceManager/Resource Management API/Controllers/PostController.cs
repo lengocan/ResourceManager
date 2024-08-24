@@ -26,6 +26,16 @@ namespace RMAPI.Controllers
             var items = _context.Posts.ToList();
             return StatusCode(StatusCodes.Status200OK, items);
         }
+        [HttpGet("{id}")]
+        public IActionResult GetPostById(Guid id)
+        {
+            var post = _context.Posts.FirstOrDefault(p => p.Id == id);
+            if (post == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, "Post not found.");
+            }
+            return StatusCode(StatusCodes.Status200OK, post);
+        }
 
         [HttpPost]
         public IActionResult addPost(InputPost input)

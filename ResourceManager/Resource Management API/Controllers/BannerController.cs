@@ -55,7 +55,7 @@ namespace RMAPI.Controllers
                 return StatusCode(StatusCodes.Status404NotFound);
 
             }
-            item.content = banner.content;
+            
             item.effect = banner.effect;
             item.isUse = banner.isUse;
             item.color = banner.color;
