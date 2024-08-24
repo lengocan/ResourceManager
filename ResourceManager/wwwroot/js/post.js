@@ -1,6 +1,8 @@
 ﻿$(document).ready(() => {
     console.log("hello");
     renderPost()
+    prepareModalForAdd() 
+
 });
 
 $('#modalCreateUpdatePost').on('show.bs.modal', function (e) {
@@ -156,6 +158,7 @@ function savePost() {
             toastr.success(id ? "Success update post" : "Success add post");
             $("#modalCreateUpdatePost").modal('hide');
             renderPost();
+            prepareModalForAdd();
         },
         error: function (error) {
             console.log(error);
