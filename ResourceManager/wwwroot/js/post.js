@@ -99,3 +99,67 @@ function DeletePost(id) {
         }
     });
 }
+function prepareModalForAdd() {
+    $("#idPost").val(''); // Clear post ID
+    $("#userCreated").val(''); // Clear user created
+    $("#content").val(''); // Clear content
+    $("#savePostButton").text("Add Post"); // Change button text
+}
+
+// Populate the modal with data for editing
+function EditPost(id) {
+    $.ajax({
+        url: 'https://localhost:7198/api/Post/' + id,
+        type: 'GET',
+        success: function (data) {
+            console.log("data post", data)
+            $("#idPost").val(data.id);
+            $("#userCreated").val(data.createdBy);
+            $("#content").val(data.content);
+            $("#savePostButton").text("Update Post"); // Change button text
+            $("#modalCreateUpdatePost").modal('show');
+        },
+        error: function (error) {
+            console.log(error);
+            toastr.error("Failed to load post data.");
+        }
+    });
+}
+
+// Save the post (create or update)
+function savePost() {
+    var id = $("#idPost").val();
+    var createdBy = $("#userCreated").val();
+    var created = getCurrentDateTime();
+    var content = $("#content").val();
+
+    var url = 'https://localhost:7198/api/Post';
+    var type = 'POST';
+
+    if (id) {
+        url = 'https://localhost:7198/api/Post/' + id;
+        type = 'PUT';
+    }
+
+    $.ajax({
+        url: url,
+        type: type,
+        processData: false,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            id: id,
+            createdBy: createdBy,
+            created: created,
+            content: content
+        }),
+        success: function () {
+            toastr.success(id ? "Success update post" : "Success add post");
+            $("#modalCreateUpdatePost").modal('hide');
+            renderPost();
+        },
+        error: function (error) {
+            console.log(error);
+            toastr.error(id ? "Failed to update post" : "Failed to add post");
+        }
+    });
+}
