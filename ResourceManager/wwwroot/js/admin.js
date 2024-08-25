@@ -97,10 +97,12 @@ function renderNoticeDM() {
         success: function (data) {
             console.log("notice admin",data)
             var dropdown = $('#notificationDropdown');
+            var notificationText = $('#notificationText');
             dropdown.empty();
 
             if (data.length === 0) {
                 dropdown.append('<a href="#" class="dropdown-item text-center">No new notifications</a>');
+                notificationText.text('Notifications');
             } else {
                 data.forEach(function (notice) {
                     var noticeItem = `
@@ -112,6 +114,7 @@ function renderNoticeDM() {
                     dropdown.append(noticeItem);
                 });
                 dropdown.append('<a href="#" class="dropdown-item text-center">See all notifications</a>');
+                notificationText.text('Notifications (' + data.length + ')');
             }
         },
         error: function (xhr, status, error) {
@@ -126,10 +129,12 @@ function renderNoticeForUser() {
         success: function (data) {
             console.log("notice user", data);
             var dropdown = $('#notificationDropdown');
+            var notificationText = $('#notificationText');
             dropdown.empty();
 
             if (data.length === 0) {
                 dropdown.append('<a href="#" class="dropdown-item text-center">No new notifications</a>');
+                notificationText.text('Notifications');
             } else {
                 data.forEach(function (notice) {
                     var noticeItem = `
@@ -141,6 +146,7 @@ function renderNoticeForUser() {
                     dropdown.append(noticeItem);
                 });
                 dropdown.append('<a href="#" class="dropdown-item text-center">See all notifications</a>');
+                notificationText.text('Notifications (' + data.length + ')');
             }
         },
         error: function (xhr, status, error) {
