@@ -58,8 +58,8 @@ function renderTablePermission() {
 									<td class="text-center">${item.roleName}</td>
                                     <td class="text-center">Active</td>
 									<td class="text-center">
-										<button type="button" class="btn btn-primary" onclick="EditPermission('${item.id}')">Sửa</button>
-										<button type="button" class="btn btn-danger" onclick="DeletePermission('${item.id}')">Xóa</button>
+										
+										<button type="button" class="btn btn-danger" onclick="DeletePermission('${item.id}')">Delete</button>
 									</td>
 								</tr>
 							`);

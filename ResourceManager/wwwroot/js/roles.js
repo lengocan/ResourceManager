@@ -57,8 +57,8 @@ function renderTableRoles() {
                                     <td>${item.name}</td>                                  
 									
 									<td class="text-center">
-										<button type="button" class="btn btn-primary" onclick="EditRole('${item.id}')">Sửa</button>
-										<button type="button" class="btn btn-danger" onclick="DeleteRole('${item.id}')">Xóa</button>
+										
+										<button type="button" class="btn btn-danger" onclick="DeleteRole('${item.id}')">Delete</button>
 									</td>
 								</tr>
 							`);

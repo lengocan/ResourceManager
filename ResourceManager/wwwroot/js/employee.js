@@ -34,7 +34,7 @@ function loadTable() {
                             <td>${item.phoneNumber}</td>
                             <td class="align-middle text-center">${item.team == "1" ? "TPHCM" : item.team == "2" ? "Ha Noi" : "Da Nang"}</td>
                             <td class="text-center">
-                                <button class="btn btn-primary" onclick="EditTask(${item.id})">Edit</button>
+                                
                                 <button class="btn btn-danger" onclick="DeleteTask(${item.id})">Delete</button>                      
                             </td>
                         </tr>`);
