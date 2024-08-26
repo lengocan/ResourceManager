@@ -56,9 +56,9 @@ namespace RMAPI.Controllers
 
             }
             
-            item.effect = banner.effect;
+            
             item.isUse = banner.isUse;
-            item.color = banner.color;
+            
             _context.Banners.Update(item);
             _context.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
