@@ -40,7 +40,7 @@ namespace ResourceManager.Controllers
             }
 
             bool projectExists = await _context.SendProjects
-                .AnyAsync(sp => sp.projectId == projectId && sp.UserId == userId);
+                .AnyAsync(sp => sp.projectId == projectId);
 
             if (projectExists)
             {

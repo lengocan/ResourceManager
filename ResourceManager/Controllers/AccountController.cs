@@ -54,7 +54,7 @@ namespace ResourceManager.Controllers
 
             
         }
-
+        //Show ra tat 
         [HttpGet]
         public async Task<IActionResult> GetAllEmployee()
         {
